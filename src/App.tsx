@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useDarkMode } from "@/hooks/useDarkMode";
-import LoginPage from "@/pages/LoginPage";
-import HomePage from "@/pages/HomePage";
+impor HomePage from "@/pages/HomePage";
 import ProfilePage from "@/pages/ProfilePage";
 import JobsPage from "@/pages/JobsPage";
 import MessagingPage from "@/pages/MessagingPage";
