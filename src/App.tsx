@@ -1,13 +1,6 @@
 import React, { useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { useDarkMode } from "@/hooks/useDarkMode";
-impor HomePage from "@/pages/HomePage";
-import ProfilePage from "@/pages/ProfilePage";
-i
-
-  return (
-    <BrowserRouter>
-      <Routes>
+import { useD
         {!isLoggedIn ? (
           <>
             <Route path="/login" element={<LoginPage onLogin={handleLogin} />} />
