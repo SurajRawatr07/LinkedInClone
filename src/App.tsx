@@ -8,9 +8,6 @@ import { useD
           </>
         ) : (
           <>
-            <Route path="/" element={<HomePage isDark={isDark} toggleDark={toggle} onLogout={handleLogout} />} />
-            <Route path="/profile" element={<ProfilePage isDark={isDark} toggleDark={toggle} onLogout={handleLogout} />} />
-            <Route path="/jobs" element={<JobsPage isDark={isDark} toggleDark={toggle} onLogout={handleLogout} />} />
             <Route path="/messaging" element={<MessagingPage isDark={isDark} toggleDark={toggle} onLogout={handleLogout} />} />
             <Route path="/notifications" element={<NotificationsPage isDark={isDark} toggleDark={toggle} onLogout={handleLogout} />} />
             <Route path="/login" element={<Navigate to="/" replace />} />
