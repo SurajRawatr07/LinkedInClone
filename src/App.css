@@ -4,9 +4,6 @@
   padding: 2rem;
   text-align: center;
 }
-
-.logo {
-  height: 6em;
   padchange: filter;
   transition: filter 300ms;
 }
