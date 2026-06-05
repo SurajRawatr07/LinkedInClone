@@ -1,0 +1,200 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 95%;
+    --foreground: 0 0% 5%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 5%;
+    --border: 0 0% 88%;
+    --primary: 211 91% 40%;
+    --primary-foreground: 0 0% 100%;
+    --muted: 0 0% 92%;
+    --muted-foreground: 0 0% 40%;
+    --accent: 211 91% 95%;
+    --ring: 211 91% 40%;
+  }
+
+  .dark {
+    --background: 214 14% 13%;
+    --foreground: 210 17% 91%;
+    --card: 211 12% 15%;
+    --card-foreground: 210 17% 91%;
+    --border: 211 14% 24%;
+    --primary: 211 91% 55%;
+    --primary-foreground: 0 0% 100%;
+    --muted: 211 12% 20%;
+    --muted-foreground: 211 12% 65%;
+    --accent: 211 30% 22%;
+    --ring: 211 91% 55%;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply font-sans antialiased;
+    background-color: #F3F2EF;
+    color: rgba(0, 0, 0, 0.9);
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .dark body {
+    background-color: #1B1F23;
+    color: #E7E9EA;
+  }
+}
+
+@layer components {
+  /* Card styles */
+  .card {
+    @apply bg-white dark:bg-[#1D2226] rounded-card shadow-card;
+  }
+
+  /* LinkedIn button styles */
+  .btn-primary {
+    @apply bg-linkedin-blue hover:bg-linkedin-blue-hover text-white font-semibold px-5 py-2 rounded-full transition-all duration-200 active:scale-95;
+  }
+
+  .btn-secondary {
+    @apply border border-linkedin-blue text-linkedin-blue hover:bg-linkedin-blue-light dark:hover:bg-linkedin-blue/10 font-semibold px-5 py-2 rounded-full transition-all duration-200 active:scale-95;
+  }
+
+  .btn-ghost {
+    @apply text-linkedin-text-secondary dark:text-linkedin-text-secondary-dark hover:text-linkedin-text dark:hover:text-linkedin-text-dark hover:bg-gray-100 dark:hover:bg-gray-700 font-medium px-3 py-2 rounded-lg transition-all duration-150;
+  }
+
+  /* Nav item */
+  .nav-item {
+    @apply flex flex-col items-center justify-center gap-0.5 px-3 py-1 text-[#666666] dark:text-[#B0B7BE] hover:text-[#000000E6] dark:hover:text-[#E7E9EA] cursor-pointer transition-all duration-150 relative min-w-[80px];
+  }
+
+  .nav-item.active {
+    @apply text-[#000000E6] dark:text-white;
+  }
+
+  .nav-item.active::after {
+    content: '';
+    @apply absolute bottom-0 left-0 right-0 h-0.5 bg-[#000000E6] dark:bg-white rounded-t;
+  }
+
+  /* Shimmer skeleton */
+  .skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+
+  .dark .skeleton {
+    background: linear-gradient(90deg, #2a2f35 25%, #363d45 50%, #2a2f35 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 dark:bg-gray-600 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-400 dark:bg-gray-500;
+  }
+
+  /* Glassmorphism */
+  .glass {
+    backdrop-filter: blur(12px);
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .dark .glass {
+    background: rgba(29, 34, 38, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  /* Reaction button */
+  .reaction-btn {
+    @apply flex items-center gap-1.5 px-3 py-2 text-sm font-semibold text-[#666666] dark:text-[#B0B7BE] hover:text-[#000000E6] dark:hover:text-[#E7E9EA] hover:bg-gray-100 dark:hover:bg-gray-700/50 rounded-lg transition-all duration-150 cursor-pointer select-none;
+  }
+
+  .reaction-btn:active {
+    @apply scale-95;
+  }
+
+  /* Input field */
+  .input-field {
+    @apply w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-[#1D2226] text-[#000000E6] dark:text-[#E7E9EA] placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-linkedin-blue focus:ring-2 focus:ring-linkedin-blue/20 transition-all duration-200;
+  }
+
+  /* Online dot */
+  .online-dot {
+    @apply absolute bottom-0.5 right-0.5 w-3 h-3 bg-linkedin-green border-2 border-white dark:border-[#1D2226] rounded-full;
+  }
+
+  /* Premium badge */
+  .premium-badge {
+    @apply text-[10px] font-bold text-white bg-gradient-to-r from-yellow-500 to-yellow-600 px-1.5 py-0.5 rounded uppercase tracking-wide;
+  }
+
+  /* Verified badge */
+  .verified-badge {
+    @apply inline-flex items-center justify-center w-4 h-4 bg-linkedin-blue text-white rounded-full text-[8px];
+  }
+
+  /* Chat bubble */
+  .chat-bubble-sent {
+    @apply bg-linkedin-blue text-white rounded-[18px] rounded-tr-[4px] px-4 py-2.5 max-w-[70%] text-sm shadow-sm;
+  }
+
+  .chat-bubble-received {
+    @apply bg-white dark:bg-[#2D3741] text-[#000000E6] dark:text-[#E7E9EA] rounded-[18px] rounded-tl-[4px] px-4 py-2.5 max-w-[70%] text-sm shadow-sm border border-gray-100 dark:border-gray-600;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
