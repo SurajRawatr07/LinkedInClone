@@ -5,13 +5,7 @@ impor HomePage from "@/pages/HomePage";
 import ProfilePage from "@/pages/ProfilePage";
 import JobsPage from "@/pages/JobsPage";
 import MessagingPage from "@/pages/MessagingPage";
-import NotificationsPage from "@/pages/NotificationsPage";
-calStorrage.setItem("linkedin-logged-in", "true");
-    setIsLoggedIn(true);
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem("linkedin-logged-in");
+import NotificatiItem("linkedin-logged-in");
     setIsLoggedIn(false);
   };
 
