@@ -1,13 +1,9 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}er: dro
+/* App-level styles - LinkedIn Clone */
+* {
+  box-sizing: border-box;
+}
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-
-.read-the-docs {
-  color: #888;
+body {
+  margin: 0;
+  padding: 0;
 }
