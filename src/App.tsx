@@ -6,11 +6,7 @@ import ProfilePage from "@/pages/ProfilePage";
 import JobsPage from "@/pages/JobsPage";
 import MessagingPage from "@/pages/MessagingPage";
 import NotificationsPage from "@/pages/NotificationsPage";
-calStorage.getItem("linkedin-logged-in") === "true";
-  });
-
-  const handleLogin = () => {
-    localStorage.setItem("linkedin-logged-in", "true");
+calStorrage.setItem("linkedin-logged-in", "true");
     setIsLoggedIn(true);
   };
 
