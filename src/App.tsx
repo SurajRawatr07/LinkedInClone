@@ -6,11 +6,7 @@ import ProfilePage from "@/pages/ProfilePage";
 import JobsPage from "@/pages/JobsPage";
 import MessagingPage from "@/pages/MessagingPage";
 import NotificationsPage from "@/pages/NotificationsPage";
-
-const App: React.FC = () => {
-  const { isDark, toggle } = useDarkMode();
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => {
-    return localStorage.getItem("linkedin-logged-in") === "true";
+calStorage.getItem("linkedin-logged-in") === "true";
   });
 
   const handleLogin = () => {
