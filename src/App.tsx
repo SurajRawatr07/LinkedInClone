@@ -3,11 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useDarkMode } from "@/hooks/useDarkMode";
 impor HomePage from "@/pages/HomePage";
 import ProfilePage from "@/pages/ProfilePage";
-import JobsPage from "@/pages/JobsPage";
-import MessagingPage from "@/pages/MessagingPage";
-import NotificatiItem("linkedin-logged-in");
-    setIsLoggedIn(false);
-  };
+i
 
   return (
     <BrowserRouter>
