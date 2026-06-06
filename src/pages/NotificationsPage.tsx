@@ -2,18 +2,7 @@ import React, { useState } from "react";
 import {
   Bell, ThumbsUp, MessageCircle, UserPlus, Briefcase,
   Heart, Gift, S
-inter}
-        <p class setActiveFilter] = useState<"all" | "unread" | "jobs" | "mentions">("all");
-  const [loading] = useState(false);
-
-  const unreadCount = notifications.filter(n => !n.isRead).length;
-
-  const handleRead = (id: string) => {
-    setNotifications(prev => prev.map(n => n.id === id ? { ...n, isRead: true } : n));
-  };
-
-  const markAllRead = () => {
-    setNotifications(prev => prev.map(n => ({ ...n, isRead: true })));
+inter}tions(prev => prev.map(n => ({ ...n, isRead: true })));
   };
 
   const filtered = notifications.filter(n => {
