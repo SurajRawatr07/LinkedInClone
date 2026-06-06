@@ -8,20 +8,7 @@ inter}tions(prev => prev.map(n => ({ ...n, isRead: true })));
   const filtered = notifications.filter(n => {
     if (er */}
             <div classN
-                </h1>
-                <p className="text-sm text-[#666666] dark:text-[#B0B7BE] mt-0.5">
-                  Stay up to date with your professional world
-                </p>
-              </div>
-              <div className="flex items-center gap-2">
-                {unreadCount > 0 && (
-                  <button
-                    onClick={markAllRead}
-                    className="flex items-center gap-1.5 text-sm font-semibold text-[#0A66C2] hover:underline"
-                  >
-                    <CheckCheck className="w-4 h-4" />
-                    Mark all read
-                  </button>
+        utton>
                 )}
                 <button className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
                   <Settings className="w-5 h-5 text-[#666666] dark:text-[#B0B7BE]" />
