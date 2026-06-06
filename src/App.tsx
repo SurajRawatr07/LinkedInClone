@@ -60,10 +60,3 @@ const App: React.FC = () => {
               <Route path="*" element={<Navigate to="/" replace />} />
             </>
           )}
-        </Routes>
-      </BrowserRouter>
-    </div>
-  );
-};
-
-export default App;
