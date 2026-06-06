@@ -4,9 +4,5 @@
   "rsc": false,
   "tsx": true,
   "tailwind": {
-    "config": "tailwind.config.ts",
-    cssVariables": true,
- iases": {
-    "co "@/components/ui",
     
 }
