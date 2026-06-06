@@ -3,11 +3,7 @@ import {
   Search, MapPin, Filter, Bookmark, BookmarkCheck,
   Briefcase, Clock, Users, Zap, X, ChevronDown, Star, ExternalLink
 } from "lucide-react";
-import Navbar from "@/components/layout/Navbar";
-import { mockJobs } from "@/constants/mockData";
-import type { Job } from "@/types";
-import { formatNumber } from "@/lib/utils";
-import { JobCardSkeleton } from "@/components/features/SkeletonLoader";
+import Navbar freton } from "@/components/features/SkeletonLoader";
 
 interface JobsPageProps {
   isDark: boolean;
