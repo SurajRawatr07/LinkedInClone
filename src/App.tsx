@@ -9,13 +9,7 @@ import MessagingPa
 
   const handleLogout = () => {
     setIsLoggedIn(false);
-  };
-
-  return (
-    <div className={isDark ? "dark" : ""}>
-      <BrowserRouter>
-        <Routes>
-          {!isLoggedIn ? (
+  };dIn ? (
             <>
               <Route path="/login" element={<LoginPage onLogin={handleLogin} />} />
               <Route path="*" element={<Navigate to="/login" replace />} />
