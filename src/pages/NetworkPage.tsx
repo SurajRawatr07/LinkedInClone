@@ -1,16 +1,7 @@
 import React, { useState } from "react";
 import {
   UserPlus, MessageSquare, Users, Globe, Search, Check,
-  X, TrendingUp, Filter, Star, MapPin
-} from "lucide-react";
-import Navbar from "@/components/layout/Navbar";
-import { mockUsers, currentUser } from "@/constants/mockData";
-import type { User } from "@/types";
-
-interface NetworkPageProps {
-  isDark: boolean;
-  toggleDark: () => void;
-  onLogout: () => void;
+  X, Trenoid;
 }
 
 const invitations = mockUsers.slice(2, 4);
