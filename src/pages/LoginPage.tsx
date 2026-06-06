@@ -1,11 +1,6 @@
 import React, { useState } from "react";
 import { Eye, EyeOff, Linkedin } from "lucide-react";
-import loginBg from "@/assets/login-bg.jpg";
-
-interfars = {};
-    if (!email) e.email = "Email is required";
-    else if (!/
-
+import 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const errs = val
