@@ -2,27 +2,7 @@ import React, { useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useDarkMode } from "@/hooks/useDarkMode";
 import LoginPage from "@/pages/LoginPage";
-import HomePage from "@/pages/HomePage";
-import ProfilePage from "@/pages/ProfilePage";
-import JobsPage from "@/pages/JobsPage";
-import MessagingPage from "@/pages/MessagingPage";
-import NotificationsPage from "@/pages/NotificationsPage";
-import NetworkPage from "@/pages/NetworkPage";
-import NotFound from "@/pages/NotFound";
-
-const App: React.FC = () => {
-  const [isDark, toggle] = useDarkMode();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  const handleLogin = () => {
-    setIsLoggedIn(true);
-  };
-
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-  };
-
-  return (
+import
     <div className={isDark ? "dark" : ""}>
       <BrowserRouter>
         <Routes>
