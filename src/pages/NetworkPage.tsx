@@ -4,18 +4,7 @@ import
     <div className="min-h-screen bg-[#F3F2EF] dark:bg-[#1B1F23]">
       <Navbar isDark={isDark} toggleDark={toggleDark} onLogout={onLogout} notificationCount={3} />
 
-      <main className="max-w-[900px] mx-auto px-4 pt-16 pb-20 md:pb-6 mt-4">
-        {/* Header */}
-        <div className="card p-5 mb-3">
-          <div className="flex items-center justify-between flex-wrap gap-3">
-            <div>
-              <h1 className="text-xl font-bold text-[#000000E6] dark:text-white flex items-center gap-2">
-                <Users className="w-5 h-5 text-[#0A66C2]" />
-                My Network
-              </h1>
-              <p className="text-sm text-[#666666] dark:text-[#B0B7BE] mt-0.5">
-                Manage your connections and grow your network
-              </p>
+      <main 
             </div>
             <div className="flex items-center gap-2 bg-[#EEF3F8] dark:bg-[#38434F] rounded-lg px-3 py-2 w-full sm:w-64">
               <Search className="w-4 h-4 text-[#666666] dark:text-[#B0B7BE] shrink-0" />
