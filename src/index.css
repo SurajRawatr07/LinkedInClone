@@ -4,17 +4,7 @@
 
 @layer base {
   :root {
-    --ba1% 95%;
-
-}
-
-@layer components {
-  /* Card styles */
-  .card {
-    @apply bg-white dark:bg-[#1D2226] rounded-card shadow-card;
-  }
-
-  /* LinkedIn button styles */
+    --ba1dIn button styles */
   .btn-primary {
     @apply bg-linkedin-blue hover:bg-linkedin-blue-hover text-white font-semibold px-5 py-2 rounded-full transition-all duration-200 active:scale-95;
   }
