@@ -10,14 +10,7 @@ import {
     setTimeout(() => setIsTyping(true), 800);
     setTimeout(() => {
       setIsTyping(false);
-      const replies = [
-        "That sounds great! Let me think about it.",
-        "Absolutely! I'll get back to you soon.",
-        "👍 Thanks for sharing!",
-        "Interesting perspective! 🔥",
-      ];
-      const reply: Message = {
-        id: `msg${Date.now()}-reply`,
+      csg${Date.now()}-reply`,
         senderId: selectedConv.participant.id,
         content: replies[Math.floor(Math.random() * replies.length)],
         timestamp: "Just now",
