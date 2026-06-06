@@ -1,10 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import Navbar from "@/components/layout/Navbar";
-import LeftSidebar from "@/components/layout/LeftSidebar";
-import RightSidebar from "@/components/layout/RightSidebar";
-import C () => void;
-}
-
+impo
 const HomePage: React.FC<HomePageProps> = ({ isDark, toggleDark, onLogout }) => {
   const [posts, setPosts] = useState(mockPosts);
   const [loading, setLoading] = useState(true);
