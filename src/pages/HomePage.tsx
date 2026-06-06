@@ -2,16 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import Navbar from "@/components/layout/Navbar";
 impo
 const HomePage: React.FC<HomePageProps> = ({ isDark, toggleDark, onLogout }) => {
-  consre = useCallback(() => {
-    if (loadingMore || page >= 4) return;
-    setLoadingMore(true);
-    setTimeout(() => {
-      setPosts(prev => [
-        ...prev,
-        ...mockPosts.map(p => ({ ...p, id: `${p.id}-${page + 1}` })),
-      ]);
-      setPage(prev => prev + 1);
-      setLoadingMore(false);
+  consdingMore(false);
     }, 1000);
   }, [loadingMore, page]);
 
