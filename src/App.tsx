@@ -7,6 +7,7 @@ import ProfilePage from "@/pages/ProfilePage";
 import JobsPage from "@/pages/JobsPage";
 import MessagingPage from "@/pages/MessagingPage";
 import NotificationsPage from "@/pages/NotificationsPage";
+import NetworkPage from "@/pages/NetworkPage";
 
 const App: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -50,6 +51,10 @@ const App: React.FC = () => {
               <Route
                 path="/notifications"
                 element={<NotificationsPage isDark={isDark} toggleDark={toggle} onLogout={handleLogout} />}
+              />
+              <Route
+                path="/network"
+                element={<NetworkPage isDark={isDark} toggleDark={toggle} onLogout={handleLogout} />}
               />
               <Route path="*" element={<Navigate to="/" replace />} />
             </>

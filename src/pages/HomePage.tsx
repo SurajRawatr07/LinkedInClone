@@ -109,6 +109,23 @@ const HomePage: React.FC<HomePageProps> = ({ isDark, toggleDark, onLogout }) => 
                   </button>
                 </div>
 
+                {/* Trending Hashtags */}
+                <div className="card p-4">
+                  <h3 className="text-sm font-bold text-[#000000E6] dark:text-white mb-3 flex items-center gap-2">
+                    <span className="text-[#0A66C2]">#</span> Trending for you
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {["#ReactJS", "#TypeScript", "#OpenSource", "#DSA", "#FrontendDev", "#JavaScript", "#TechJobs"].map((tag) => (
+                      <button
+                        key={tag}
+                        className="text-xs font-semibold bg-[#EEF3F8] dark:bg-[#38434F] text-[#0A66C2] dark:text-[#5B9DD9] px-3 py-1.5 rounded-full hover:bg-[#EAF4FF] dark:hover:bg-[#0A66C2]/20 transition-colors"
+                      >
+                        {tag}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
                 {posts.map((post) => (
                   <PostCard key={post.id} post={post} />
                 ))}

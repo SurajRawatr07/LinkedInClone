@@ -108,9 +108,11 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
         </div>
 
         <div className="flex items-center gap-1 shrink-0 ml-2">
-          <button className="btn-secondary text-xs px-3 py-1.5 rounded-full border-[#0A66C2] text-[#0A66C2] hover:bg-[#EAF4FF] dark:hover:bg-[#0A66C2]/10 transition-colors font-bold">
-            + Follow
-          </button>
+          {post.author.id !== "u1" && (
+            <button className="btn-secondary text-xs px-3 py-1.5 rounded-full border-[#0A66C2] text-[#0A66C2] hover:bg-[#EAF4FF] dark:hover:bg-[#0A66C2]/10 transition-colors font-bold">
+              + Follow
+            </button>
+          )}
           <div className="relative">
             <button
               onClick={() => setShowMenu(!showMenu)}
@@ -119,22 +121,20 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
               <MoreHorizontal className="w-5 h-5 text-[#666666] dark:text-[#B0B7BE]" />
             </button>
             {showMenu && (
-              <div className="absolute top-full right-0 mt-1 w-52 bg-white dark:bg-[#1D2226] rounded-xl shadow-card-hover border border-gray-100 dark:border-gray-700 z-20 animate-slide-down overflow-hidden">
+              <div className="absolute top-full right-0 mt-1 w-56 bg-white dark:bg-[#1D2226] rounded-xl shadow-card-hover border border-gray-100 dark:border-gray-700 z-20 animate-slide-down overflow-hidden">
                 {[
-                  { label: saved ? "Unsave" : "Save post", icon: saved ? BookmarkCheck : Bookmark },
-                  { label: "Copy link to post", icon: Send },
-                  { label: "Not interested", icon: X },
-                  { label: "Unfollow", icon: X },
+                  { label: saved ? "Unsave post" : "Save post", icon: saved ? BookmarkCheck : Bookmark, action: () => { setSaved(!saved); setShowMenu(false); } },
+                  { label: "Copy link to post", icon: Send, action: () => { setShowMenu(false); } },
+                  { label: "Share via message", icon: Send, action: () => setShowMenu(false) },
+                  { label: "Not interested in this", icon: X, action: () => setShowMenu(false) },
+                  { label: "Report post", icon: X, action: () => setShowMenu(false) },
                 ].map((item) => (
                   <button
                     key={item.label}
-                    onClick={() => {
-                      if (item.label.includes("Save")) setSaved(!saved);
-                      setShowMenu(false);
-                    }}
+                    onClick={item.action}
                     className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 dark:hover:bg-[#38434F] transition-colors text-left text-sm text-[#000000E6] dark:text-white"
                   >
-                    <item.icon className="w-4 h-4 text-[#666666] dark:text-[#B0B7BE]" />
+                    <item.icon className="w-4 h-4 text-[#666666] dark:text-[#B0B7BE] shrink-0" />
                     {item.label}
                   </button>
                 ))}

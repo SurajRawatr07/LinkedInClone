@@ -1,12 +1,14 @@
+
 import React, { useState } from "react";
 import {
   MapPin, Link2, Mail, Edit3, Plus, ChevronDown, ChevronUp,
   Star, Award, Briefcase, GraduationCap, ExternalLink, Share2,
   UserPlus, MessageSquare, MoreHorizontal, Check, Eye, Download,
-  Github, Globe, Code2, Layers, BookOpen, Trophy, Flame
+  Github, Globe, Code2, Layers, BookOpen, Trophy, Flame, Languages
 } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
 import PostCard from "@/components/features/PostCard";
+import DeveloperPortfolio from "@/components/features/DeveloperPortfolio";
 import {
   currentUser, mockExperiences, mockEducation,
   mockSkills, mockCertifications, mockPosts
@@ -79,7 +81,7 @@ const projects = [
 
 const ProfilePage: React.FC<ProfilePageProps> = ({ isDark, toggleDark, onLogout }) => {
   const [skillsExpanded, setSkillsExpanded] = useState(false);
-  const [activeTab, setActiveTab] = useState<"posts" | "about" | "activity">("posts");
+  const [activeTab, setActiveTab] = useState<"posts" | "about" | "activity" | "portfolio">("posts");
   const [skills, setSkills] = useState(mockSkills);
   const [isFollowing, setIsFollowing] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
@@ -250,7 +252,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ isDark, toggleDark, onLogout 
           {/* ===== PROFILE TABS ===== */}
           <div className="card px-4">
             <div className="flex border-b border-gray-100 dark:border-gray-700 overflow-x-auto hide-scrollbar">
-              {(["posts", "about", "activity"] as const).map(tab => (
+              {(["posts", "about", "portfolio", "activity"] as const).map(tab => (
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab)}
@@ -260,7 +262,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ isDark, toggleDark, onLogout 
                       : "border-transparent text-[#666666] dark:text-[#B0B7BE] hover:text-[#000000E6] dark:hover:text-white hover:border-gray-300"
                   }`}
                 >
-                  {tab}
+                  {tab === "portfolio" ? "Dev Portfolio" : tab}
                 </button>
               ))}
             </div>
@@ -481,6 +483,58 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ isDark, toggleDark, onLogout 
                   : <><ChevronDown className="w-4 h-4" />Show all {skills.length} skills</>
                 }
               </button>
+            </div>
+          )}
+
+          {/* ===== DEVELOPER PORTFOLIO ===== */}
+          {activeTab === "portfolio" && (
+            <DeveloperPortfolio />
+          )}
+
+          {/* ===== LANGUAGES ===== */}
+          {(activeTab === "about" || activeTab === "posts") && (
+            <div className="card p-5">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-lg font-bold text-[#000000E6] dark:text-white flex items-center gap-2">
+                  <Languages className="w-5 h-5" />
+                  Languages
+                </h2>
+                <button className="p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                  <Plus className="w-4 h-4 text-[#666666] dark:text-[#B0B7BE]" />
+                </button>
+              </div>
+              <div className="space-y-3">
+                {[
+                  { lang: "Hindi", level: "Native" },
+                  { lang: "English", level: "Professional working proficiency" },
+                ].map(l => (
+                  <div key={l.lang} className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm font-semibold text-[#000000E6] dark:text-white">{l.lang}</p>
+                      <p className="text-xs text-[#666666] dark:text-[#B0B7BE]">{l.level}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* ===== INTERESTS ===== */}
+          {(activeTab === "about" || activeTab === "posts") && (
+            <div className="card p-5">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-lg font-bold text-[#000000E6] dark:text-white flex items-center gap-2">
+                  <Star className="w-5 h-5 text-[#915907]" />
+                  Interests
+                </h2>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {["Open Source", "Hackathons", "Web Development", "DSA", "UI/UX", "React Ecosystem", "Developer Tools", "Tech Community"].map(interest => (
+                  <span key={interest} className="text-xs font-semibold bg-[#EEF3F8] dark:bg-[#38434F] text-[#000000E6] dark:text-white px-3 py-1.5 rounded-full hover:bg-[#EAF4FF] dark:hover:bg-[#0A66C2]/20 cursor-pointer transition-colors">
+                    {interest}
+                  </span>
+                ))}
+              </div>
             </div>
           )}
 
