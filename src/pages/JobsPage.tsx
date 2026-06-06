@@ -2,15 +2,7 @@ import React, { useState } from "react";
 import {
   Search, MapPin, Filter, Bookmark, BookmarkCheck,
   Briefcase, Clock, Users, Zap, X, ChevronDown, Star, ExternalLink
-} from "lucide-react";
-import Navbar freton } from "@/components/features/SkeletonLoader";
-el: React.FC<{ job: Job | null; onClose: () => void }> = ({ job, onClose }) => {
-  if (!job) return null;
-
-
-      <div className="p-5">
-        {/* Company */}
-        <div className="flex items-start gap-4 mb-4">
+} from sName="flex items-start gap-4 mb-4">
           <img src={job.companyLogo} alt={job.company} className="w-16 h-16 rounded-xl object-cover border border-gray-200 dark:border-gray-600 shadow-sm" />
           <div>
             <h2 className="text-xl font-bold text-[#000000E6] dark:text-white">{job.title}</h2>
