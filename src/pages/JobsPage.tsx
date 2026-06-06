@@ -7,14 +7,6 @@ import Navbar freton } from "@/components/features/SkeletonLoader";
 el: React.FC<{ job: Job | null; onClose: () => void }> = ({ job, onClose }) => {
   if (!job) return null;
 
-  return (
-    <div className="card h-full overflow-y-auto animate-slide-up">
-      <div className="sticky top-0 bg-white dark:bg-[#1D2226] z-10 border-b border-gray-100 dark:border-gray-700 px-5 py-3 flex items-center justify-between">
-        <h3 className="font-bold text-[#000000E6] dark:text-white text-sm">Job Details</h3>
-        <button onClick={onClose} className="p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors lg:hidden">
-          <X className="w-4 h-4 text-[#666666] dark:text-[#B0B7BE]" />
-        </button>
-      </div>
 
       <div className="p-5">
         {/* Company */}
