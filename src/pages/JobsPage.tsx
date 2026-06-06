@@ -1,23 +1,7 @@
 import React, { useState } from "react";
 import {
   Search, MapPin, Filter, Bookmark, BookmarkCheck,
-  Briefcase, Clock, Users, Zap, X, ChevronDown, Star, ExternalLink
-} from sName="flex items-start gap-4 mb-4">
-          <
-          )}
-          {job.isEasyApply && (
-            <span className="bg-[#EAF4FF] dark:bg-[#0A66C2]/20 text-[#0A66C2] dark:text-[#5B9DD9] text-xs font-bold px-2.5 py-1 rounded-full flex items-center gap-1">
-              <Zap className="w-3 h-3" />Easy Apply
-            </span>
-          )}
-          {job.matchScore && (
-            <span className="bg-[#EAF4FF] dark:bg-[#0A66C2]/20 text-[#0A66C2] dark:text-[#5B9DD9] text-xs font-bold px-2.5 py-1 rounded-full flex items-center gap-1">
-              <Star className="w-3 h-3" />{job.matchScore}% match
-            </span>
-          )}
-        </div>
-
-        {/* Key Info */}
+  Briefnfo */}
         <div className="grid grid-cols-2 gap-3 mb-4 p-4 bg-[#F3F2EF] dark:bg-[#2D3741] rounded-xl">
           {[
             { icon: Briefcase, label: "Job type", value: job.type },
