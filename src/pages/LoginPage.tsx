@@ -1,13 +1,66 @@
 import React, { useState } from "react";
 import { Eye, EyeOff, Linkedin } from "lucide-react";
-import 
+import loginBg from "@/assets/login-bg.jpg";
+
+interface LoginPageProps {
+  onLogin: () => void;
+}
+
+const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [remember, setRemember] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
+
+  const validate = () => {
+    const e: typeof errors = {};
+    if (!email) e.email = "Email is required";
+    else if (!/\S+@\S+\.\S+/.test(email)) e.email = "Enter a valid email";
+    if (!password) e.password = "Password is required";
+    else if (password.length < 6) e.password = "Password must be at least 6 characters";
+    return e;
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const errs = val
-      
+    const errs = validate();
+    if (Object.keys(errs).length > 0) { setErrors(errs); return; }
+    setLoading(true);
+    setTimeout(() => { setLoading(false); onLogin(); }, 1200);
+  };
+
+  const handleGoogle = () => {
+    setLoading(true);
+    setTimeout(() => { setLoading(false); onLogin(); }, 800);
+  };
+
   return (
-    <div className=relatw-md">
-            <h1 +", label: "Companies" },
+    <div className="min-h-screen flex flex-col lg:flex-row bg-white dark:bg-[#1B1F23]">
+      {/* Left - Branding */}
+      <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden">
+        <img src={loginBg} alt="LinkedIn background" className="absolute inset-0 w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0A66C2]/80 via-[#004182]/60 to-[#001B4B]/90" />
+        <div className="relative z-10 flex flex-col justify-between p-12 text-white w-full">
+          <div className="flex items-center gap-2">
+            <div className="w-10 h-10 bg-white rounded-md flex items-center justify-center">
+              <Linkedin className="w-7 h-7 text-[#0A66C2]" />
+            </div>
+            <span className="text-2xl font-bold tracking-tight">LinkedIn</span>
+          </div>
+          <div className="max-w-md">
+            <h1 className="text-5xl font-bold leading-tight mb-6">
+              Welcome to your professional community
+            </h1>
+            <p className="text-xl text-white/80 leading-relaxed">
+              Connect with millions of professionals, discover new opportunities, and build the career you deserve.
+            </p>
+            <div className="flex gap-8 mt-10">
+              {[
+                { num: "1B+", label: "Members" },
+                { num: "200+", label: "Countries" },
+                { num: "60M+", label: "Companies" },
               ].map((stat) => (
                 <div key={stat.label}>
                   <div className="text-3xl font-bold">{stat.num}</div>

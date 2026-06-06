@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import {
   Search, MapPin, Filter, Bookmark, BookmarkCheck,
-  Briefcase, Clock, Users, Zap, X, ChevronDown, Star, ExternalLink
+  Briefcase, Clock, Users, Zap, X, ChevronDown, Star, ExternalLink,
+  Building2
 } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
-import { mockJobs } from "@/constants/mockData";
-import type { Job } from "@/types";
-import { formatNumber } from "@/lib/utils";
 import { JobCardSkeleton } from "@/components/features/SkeletonLoader";
 
 interface JobsPageProps {
@@ -15,16 +13,193 @@ interface JobsPageProps {
   onLogout: () => void;
 }
 
-const FILTERS = ["Easy Apply", "Remote", "Full-time", "Part-time", "Contract", "Internship", "$150K+", "$200K+"];
+interface Job {
+  id: string;
+  title: string;
+  company: string;
+  companyLogo: string;
+  location: string;
+  type: string;
+  salary?: string;
+  postedDate: string;
+  applicants: number;
+  description: string;
+  skills: string[];
+  isNew?: boolean;
+  isEasyApply?: boolean;
+  isSaved?: boolean;
+  matchScore?: number;
+}
 
+const FILTERS = ["Easy Apply", "Remote", "Full-time", "Part-time", "Contract", "Internship"];
+
+const formatNumber = (n: number) => {
+  if (n >= 1000) return `${(n / 1000).toFixed(1)}k`;
+  return n.toString();
+};
+
+const mockJobs: Job[] = [
+  {
+    id: "1",
+    title: "Frontend Developer",
+    company: "Google",
+    companyLogo: "https://images.unsplash.com/photo-1611162616475-46b635cb6868?w=80&h=80&fit=crop",
+    location: "Bangalore, India (Remote)",
+    type: "Full-time",
+    salary: "₹18L – ₹28L/yr",
+    postedDate: "2 days ago",
+    applicants: 847,
+    isNew: true,
+    isEasyApply: true,
+    matchScore: 94,
+    description:
+      "We are looking for a talented Frontend Developer to join our team. You will be responsible for building and maintaining high-quality web applications using modern technologies like React, TypeScript, and Tailwind CSS.",
+    skills: ["React", "TypeScript", "Tailwind CSS", "JavaScript", "HTML", "CSS", "Git"],
+  },
+  {
+    id: "2",
+    title: "React Developer",
+    company: "Microsoft",
+    companyLogo: "https://images.unsplash.com/photo-1642132652806-8aa9e542a332?w=80&h=80&fit=crop",
+    location: "Hyderabad, India",
+    type: "Full-time",
+    salary: "₹22L – ₹35L/yr",
+    postedDate: "1 week ago",
+    applicants: 1200,
+    isEasyApply: true,
+    matchScore: 88,
+    description:
+      "Join Microsoft's world-class engineering team to build next-generation cloud products. You will work closely with designers and backend engineers to deliver exceptional user experiences.",
+    skills: ["React", "Redux", "TypeScript", "Azure", "REST APIs", "Node.js"],
+  },
+  {
+    id: "3",
+    title: "UI/UX Engineer",
+    company: "Flipkart",
+    companyLogo: "https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=80&h=80&fit=crop",
+    location: "Bangalore, India",
+    type: "Full-time",
+    salary: "₹14L – ₹20L/yr",
+    postedDate: "3 days ago",
+    applicants: 562,
+    isNew: true,
+    matchScore: 82,
+    description:
+      "Flipkart is looking for a skilled UI/UX Engineer to craft beautiful and functional interfaces. You will collaborate with product managers and backend teams to ship features that delight millions of users.",
+    skills: ["Figma", "React", "CSS", "Tailwind CSS", "User Research", "Prototyping"],
+  },
+  {
+    id: "4",
+    title: "Full Stack Developer",
+    company: "Razorpay",
+    companyLogo: "https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?w=80&h=80&fit=crop",
+    location: "Pune, India (Hybrid)",
+    type: "Full-time",
+    salary: "₹20L – ₹32L/yr",
+    postedDate: "5 days ago",
+    applicants: 934,
+    isEasyApply: true,
+    matchScore: 79,
+    description:
+      "Razorpay is hiring a Full Stack Developer to help power India's leading payment gateway. You will own features end-to-end from frontend to API design and database optimisation.",
+    skills: ["React", "Node.js", "TypeScript", "PostgreSQL", "Redis", "Docker"],
+  },
+  {
+    id: "5",
+    title: "Frontend Intern",
+    company: "Zomato",
+    companyLogo: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=80&h=80&fit=crop",
+    location: "Delhi, India",
+    type: "Internship",
+    salary: "₹25,000/month",
+    postedDate: "1 day ago",
+    applicants: 2100,
+    isNew: true,
+    isEasyApply: true,
+    matchScore: 91,
+    description:
+      "Exciting internship opportunity at Zomato to work on real production features. Learn from senior engineers, ship code in your first week, and gain hands-on experience with a large-scale consumer app.",
+    skills: ["React", "JavaScript", "HTML", "CSS", "Git"],
+  },
+  {
+    id: "6",
+    title: "JavaScript Developer",
+    company: "Swiggy",
+    companyLogo: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=80&h=80&fit=crop",
+    location: "Remote",
+    type: "Remote",
+    salary: "₹12L – ₹18L/yr",
+    postedDate: "2 weeks ago",
+    applicants: 675,
+    description:
+      "Swiggy's frontend team is looking for a JavaScript Developer to improve performance and build new features for our web platform serving millions of daily active users.",
+    skills: ["JavaScript", "React", "Webpack", "Performance", "REST APIs"],
+  },
+  {
+    id: "7",
+    title: "React Native Developer",
+    company: "CRED",
+    companyLogo: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=80&h=80&fit=crop",
+    location: "Bangalore, India",
+    type: "Full-time",
+    salary: "₹25L – ₹40L/yr",
+    postedDate: "4 days ago",
+    applicants: 420,
+    isNew: true,
+    matchScore: 75,
+    description:
+      "CRED is building premium financial products for responsible credit card users. Join our mobile team to craft pixel-perfect, silky-smooth React Native experiences.",
+    skills: ["React Native", "TypeScript", "iOS", "Android", "Redux", "Animations"],
+  },
+  {
+    id: "8",
+    title: "Angular Developer",
+    company: "Infosys",
+    companyLogo: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=80&h=80&fit=crop",
+    location: "Chennai, India",
+    type: "Contract",
+    salary: "₹10L – ₹16L/yr",
+    postedDate: "1 week ago",
+    applicants: 310,
+    isEasyApply: true,
+    description:
+      "Infosys Digital is seeking an Angular Developer for a 12-month contract engagement with a leading financial services client. Strong RxJS and NgRx knowledge preferred.",
+    skills: ["Angular", "TypeScript", "RxJS", "NgRx", "HTML", "CSS"],
+  },
+];
+
+// ─── Job Card Skeleton ────────────────────────────────────────────────────────
+// (re-exported from SkeletonLoader but also usable inline)
+const LocalJobCardSkeleton: React.FC = () => (
+  <div className="card p-4 animate-pulse">
+    <div className="flex items-start gap-3">
+      <div className="w-12 h-12 rounded-lg bg-gray-200 dark:bg-gray-700 shrink-0" />
+      <div className="flex-1 space-y-2">
+        <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4" />
+        <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-1/2" />
+        <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-2/3" />
+        <div className="flex gap-2 mt-2">
+          <div className="h-5 w-16 bg-gray-200 dark:bg-gray-700 rounded-full" />
+          <div className="h-5 w-20 bg-gray-200 dark:bg-gray-700 rounded-full" />
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+// ─── Job Detail Panel ─────────────────────────────────────────────────────────
 const JobDetailPanel: React.FC<{ job: Job | null; onClose: () => void }> = ({ job, onClose }) => {
   if (!job) return null;
 
   return (
-    <div className="card h-full overflow-y-auto animate-slide-up">
-      <div className="sticky top-0 bg-white dark:bg-[#1D2226] z-10 border-b border-gray-100 dark:border-gray-700 px-5 py-3 flex items-center justify-between">
-        <h3 className="font-bold text-[#000000E6] dark:text-white text-sm">Job Details</h3>
-        <button onClick={onClose} className="p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors lg:hidden">
+    <div className="card h-full overflow-y-auto">
+      {/* Header */}
+      <div className="sticky top-0 bg-white dark:bg-[#1E2A35] z-10 flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
+        <span className="text-sm font-semibold text-[#0A66C2]">Job Details</span>
+        <button
+          onClick={onClose}
+          className="p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+        >
           <X className="w-4 h-4 text-[#666666] dark:text-[#B0B7BE]" />
         </button>
       </div>
@@ -32,7 +207,11 @@ const JobDetailPanel: React.FC<{ job: Job | null; onClose: () => void }> = ({ jo
       <div className="p-5">
         {/* Company */}
         <div className="flex items-start gap-4 mb-4">
-          <img src={job.companyLogo} alt={job.company} className="w-16 h-16 rounded-xl object-cover border border-gray-200 dark:border-gray-600 shadow-sm" />
+          <img
+            src={job.companyLogo}
+            alt={job.company}
+            className="w-16 h-16 rounded-xl object-cover border border-gray-200 dark:border-gray-600 shadow-sm"
+          />
           <div>
             <h2 className="text-xl font-bold text-[#000000E6] dark:text-white">{job.title}</h2>
             <p className="text-base text-[#000000E6] dark:text-[#E7E9EA] font-medium">{job.company}</p>
@@ -91,7 +270,10 @@ const JobDetailPanel: React.FC<{ job: Job | null; onClose: () => void }> = ({ jo
           <h3 className="font-bold text-[#000000E6] dark:text-white mb-2">Skills required</h3>
           <div className="flex flex-wrap gap-2">
             {job.skills.map(skill => (
-              <span key={skill} className="bg-[#EEF3F8] dark:bg-[#38434F] text-[#000000E6] dark:text-white px-3 py-1.5 rounded-full text-xs font-medium">
+              <span
+                key={skill}
+                className="bg-[#EEF3F8] dark:bg-[#38434F] text-[#000000E6] dark:text-white px-3 py-1.5 rounded-full text-xs font-medium"
+              >
                 {skill}
               </span>
             ))}
@@ -120,6 +302,7 @@ const JobDetailPanel: React.FC<{ job: Job | null; onClose: () => void }> = ({ jo
   );
 };
 
+// ─── Main Page ────────────────────────────────────────────────────────────────
 const JobsPage: React.FC<JobsPageProps> = ({ isDark, toggleDark, onLogout }) => {
   const [search, setSearch] = useState("");
   const [location, setLocation] = useState("");
@@ -130,7 +313,9 @@ const JobsPage: React.FC<JobsPageProps> = ({ isDark, toggleDark, onLogout }) => 
   const [showFilters, setShowFilters] = useState(false);
 
   const toggleFilter = (f: string) => {
-    setActiveFilters(prev => prev.includes(f) ? prev.filter(x => x !== f) : [...prev, f]);
+    setActiveFilters(prev =>
+      prev.includes(f) ? prev.filter(x => x !== f) : [...prev, f]
+    );
   };
 
   const toggleSave = (id: string) => {
@@ -141,11 +326,13 @@ const JobsPage: React.FC<JobsPageProps> = ({ isDark, toggleDark, onLogout }) => 
     const q = search.toLowerCase();
     const matches = !q || j.title.toLowerCase().includes(q) || j.company.toLowerCase().includes(q);
     const loc = !location || j.location.toLowerCase().includes(location.toLowerCase());
-    const filters = activeFilters.length === 0 || activeFilters.some(f => {
-      if (f === "Easy Apply") return j.isEasyApply;
-      if (f === "Remote") return j.type === "Remote";
-      return j.type === f;
-    });
+    const filters =
+      activeFilters.length === 0 ||
+      activeFilters.some(f => {
+        if (f === "Easy Apply") return j.isEasyApply;
+        if (f === "Remote") return j.type === "Remote";
+        return j.type === f;
+      });
     return matches && loc && filters;
   });
 
@@ -183,7 +370,7 @@ const JobsPage: React.FC<JobsPageProps> = ({ isDark, toggleDark, onLogout }) => 
               </button>
             </div>
 
-            {/* Filters */}
+            {/* Filter chips */}
             <div className="flex items-center gap-2 mt-3 flex-wrap">
               <button
                 onClick={() => setShowFilters(!showFilters)}
@@ -193,6 +380,7 @@ const JobsPage: React.FC<JobsPageProps> = ({ isDark, toggleDark, onLogout }) => 
                 All filters
                 <ChevronDown className={`w-3 h-3 transition-transform ${showFilters ? "rotate-180" : ""}`} />
               </button>
+
               {FILTERS.map(f => (
                 <button
                   key={f}
@@ -207,6 +395,7 @@ const JobsPage: React.FC<JobsPageProps> = ({ isDark, toggleDark, onLogout }) => 
                   {activeFilters.includes(f) && <span className="ml-1">×</span>}
                 </button>
               ))}
+
               {activeFilters.length > 0 && (
                 <button
                   onClick={() => setActiveFilters([])}
@@ -224,14 +413,14 @@ const JobsPage: React.FC<JobsPageProps> = ({ isDark, toggleDark, onLogout }) => 
             <div className={`flex-1 space-y-2 ${selectedJob ? "lg:max-w-[380px] lg:shrink-0" : ""}`}>
               <p className="text-sm text-[#666666] dark:text-[#B0B7BE] px-1">
                 {filteredJobs.length} job{filteredJobs.length !== 1 ? "s" : ""} found
-                {activeFilters.length > 0 ? ` · Filtered` : ""}
+                {activeFilters.length > 0 ? " · Filtered" : ""}
               </p>
 
               {loading ? (
                 <>
-                  <JobCardSkeleton />
-                  <JobCardSkeleton />
-                  <JobCardSkeleton />
+                  <LocalJobCardSkeleton />
+                  <LocalJobCardSkeleton />
+                  <LocalJobCardSkeleton />
                 </>
               ) : (
                 filteredJobs.map(job => (
@@ -239,11 +428,17 @@ const JobsPage: React.FC<JobsPageProps> = ({ isDark, toggleDark, onLogout }) => 
                     key={job.id}
                     onClick={() => setSelectedJob(job)}
                     className={`card p-4 cursor-pointer transition-all duration-150 hover:shadow-card-hover ${
-                      selectedJob?.id === job.id ? "border-2 border-[#0A66C2] bg-[#EAF4FF]/30 dark:bg-[#0A66C2]/5" : "border-2 border-transparent"
+                      selectedJob?.id === job.id
+                        ? "border-2 border-[#0A66C2] bg-[#EAF4FF]/30 dark:bg-[#0A66C2]/5"
+                        : "border-2 border-transparent"
                     }`}
                   >
                     <div className="flex items-start gap-3">
-                      <img src={job.companyLogo} alt={job.company} className="w-12 h-12 rounded-lg object-cover border border-gray-200 dark:border-gray-600 shrink-0" />
+                      <img
+                        src={job.companyLogo}
+                        alt={job.company}
+                        className="w-12 h-12 rounded-lg object-cover border border-gray-200 dark:border-gray-600 shrink-0"
+                      />
                       <div className="flex-1 min-w-0">
                         <div className="flex items-start justify-between gap-2">
                           <div className="min-w-0">
@@ -267,12 +462,16 @@ const JobsPage: React.FC<JobsPageProps> = ({ isDark, toggleDark, onLogout }) => 
                         </div>
 
                         {job.salary && (
-                          <p className="text-xs font-semibold text-[#057642] dark:text-green-400 mt-1.5">{job.salary}</p>
+                          <p className="text-xs font-semibold text-[#057642] dark:text-green-400 mt-1.5">
+                            {job.salary}
+                          </p>
                         )}
 
                         <div className="flex flex-wrap gap-1.5 mt-2">
                           {job.isNew && (
-                            <span className="text-[10px] font-bold bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 px-1.5 py-0.5 rounded-full">New</span>
+                            <span className="text-[10px] font-bold bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 px-1.5 py-0.5 rounded-full">
+                              New
+                            </span>
                           )}
                           {job.isEasyApply && (
                             <span className="text-[10px] font-bold bg-[#EAF4FF] dark:bg-[#0A66C2]/20 text-[#0A66C2] dark:text-[#5B9DD9] px-1.5 py-0.5 rounded-full flex items-center gap-0.5">
@@ -291,7 +490,9 @@ const JobsPage: React.FC<JobsPageProps> = ({ isDark, toggleDark, onLogout }) => 
                           <span className="text-[11px] text-[#666666] dark:text-[#B0B7BE]">{job.postedDate}</span>
                           <span className="text-[#666666] dark:text-[#B0B7BE] text-[11px]">·</span>
                           <Users className="w-3 h-3 text-[#666666] dark:text-[#B0B7BE]" />
-                          <span className="text-[11px] text-[#666666] dark:text-[#B0B7BE]">{formatNumber(job.applicants)} applicants</span>
+                          <span className="text-[11px] text-[#666666] dark:text-[#B0B7BE]">
+                            {formatNumber(job.applicants)} applicants
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -303,7 +504,9 @@ const JobsPage: React.FC<JobsPageProps> = ({ isDark, toggleDark, onLogout }) => 
                 <div className="card p-8 text-center">
                   <Briefcase className="w-12 h-12 text-gray-300 dark:text-gray-600 mx-auto mb-3" />
                   <p className="font-semibold text-[#000000E6] dark:text-white">No jobs found</p>
-                  <p className="text-sm text-[#666666] dark:text-[#B0B7BE] mt-1">Try adjusting your search or filters</p>
+                  <p className="text-sm text-[#666666] dark:text-[#B0B7BE] mt-1">
+                    Try adjusting your search or filters
+                  </p>
                 </div>
               )}
             </div>
