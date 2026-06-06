@@ -6,20 +6,7 @@ inter}tions(prev => prev.map(n => ({ ...n, isRead: true })));
   };
 
   const filtered = notifications.filter(n => {
-    if (activeFilter === "unread") return !n.isRead;
-    if (activeFilter === "jobs") return n.type === "job";
-    if (activeFilter === "mentions") return n.type === "mention";
-    return true;
-  });
-
-  return (
-    <div className="min-h-screen bg-[#F3F2EF] dark:bg-[#1B1F23]">
-      <Navbar isDark={isDark} toggleDark={toggleDark} onLogout={onLogout} notificationCount={unreadCount} />
-
-      <main className="max-w-[700px] mx-auto px-4 pt-16 pb-20 md:pb-4">
-        <div className="mt-4">
-          <div className="card overflow-hidden">
-            {/* Header */}
+    if (er */}
             <div className="flex items-center justify-between px-5 pt-5 pb-3">
               <div>
                 <h1 className="text-xl font-bold text-[#000000E6] dark:text-white flex items-center gap-2">
