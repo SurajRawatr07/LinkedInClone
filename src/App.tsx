@@ -9,20 +9,7 @@ import
           {!isLoggedIn ? (
             <>
               <Route path="/login" element={<LoginPage onLogin={handleLogin} />} />
-              <Route path="*" element={<Navigate to="/login" replace />} />
-            </>
-          ) : (
-            <>
-              <Route
-                path="/"
-                element={<HomePage isDark={isDark} toggleDark={toggle} onLogout={handleLogout} />}
-              />
-              <Route
-                path="/profile"
-                element={<ProfilePage isDark={isDark} toggleDark={toggle} onLogout={handleLogout} />}
-              />
-              <Route
-                path="/jobs"
+      ath="/jobs"
                 element={<JobsPage isDark={isDark} toggleDark={toggle} onLogout={handleLogout} />}
               />
               <Route
