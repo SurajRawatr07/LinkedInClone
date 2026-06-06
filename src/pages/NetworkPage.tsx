@@ -4,15 +4,7 @@ import {
   X, Trenoid;
 }
 
-const invitations = mockUsers.slice(2, 4);
-
-const NetworkPage: React.FC<NetworkPageProps> = ({ isDark, toggleDark, onLogout }) => {
-  const [activeTab, setActiveTab] = useState<"connections" | "requests" | "discover">("discover");
-  const [searchQuery, setSearchQuery] = useState("");
-  const [connections, setConnections] = useState(
-    mockUsers.map(u => ({ ...u, status: u.isConnected ? "connected" : "none" as "connected" | "pending" | "none" | "dismissed" }))
-  );
-  const [invites, setInvites] = useState(
+const invitativites] = useState(
     invitations.map(u => ({ ...u, accepted: false, dismissed: false }))
   );
   const [followingMap, setFollowingMap] = useState<Record<string, boolean>>({});
