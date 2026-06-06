@@ -7,13 +7,7 @@ import {
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, selectedConv]);
-
-  const sendMessage = () => {
-    if (!messageText.trim() || !selectedConv) return;
-    const newMsg: Message = {
-      id: `msg${Date.now()}`,
-      senderId: currentUser.id,
+  }, [messagesrrentUser.id,
       content: messageText.trim(),
       timestamp: "Just now",
       isRead: false,
