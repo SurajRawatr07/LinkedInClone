@@ -1,13 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import {
   SearcrchQuery, setSearchQuery] = useState("");
-  const [showMobileChat, setShowMobileChat] = useState(false);
-  const [ping indicator
-  useEffect(() => {
-    if (!selectedConv) return;
-    const t = setTimeout(() => setIsTyping(false), 3000);
-    return () => clearTimeout(t);
-  }, [messages, selectedConv]);
+  constages, selectedConv]);
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {
