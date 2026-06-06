@@ -1,14 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import {
   Search, Edit, Phone, Video, Info, Send, Image,
-  Smile, Paperclip, MoreHorizontal, ArrowLeft, Check, CheckCheck,
-  Mic, X, Star, Archive
-} from "lucide-react";
-import Navbar from "@/components/layout/Navbar";
-import { mockConversations, mockMessages, currentUser } from "@/constants/mockData";
-import type { Conversation, Message } from "@/types";
-
-const EMOJI_LIST = ["😊","😂","❤️","👍","🎉","🔥","💡","✅","🚀","💻","🙌","👏","😎","🤝","💯","⭐","🎯","💪","🌟","😄"];
+  Smile, Paperclip, MoreHorizontal","👍","🎉","🔥","💡","✅","🚀","💻","🙌","👏","😎","🤝","💯","⭐","🎯","💪","🌟","😄"];
 
 interface MessagingPageProps {
   isDark: boolean;
