@@ -308,18 +308,4 @@ const NetworkPage: React.FC<NetworkPageProps> = ({ isDark, toggleDark, onLogout 
                           ? "border-[#0A66C2] text-[#0A66C2] bg-[#EAF4FF] dark:bg-[#0A66C2]/20"
                           : "border-[#0A66C2] text-[#0A66C2] hover:bg-[#EAF4FF] dark:hover:bg-[#0A66C2]/10"
                       }`}
-                    >
-                      {followingMap[user.id] ? "Following" : "Follow"}
-                    </button>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
-      </main>
-    </div>
-  );
-};
-
-export default NetworkPage;
+           e;
