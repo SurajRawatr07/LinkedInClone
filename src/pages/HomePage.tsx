@@ -2,11 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import Navbar from "@/components/layout/Navbar";
 import LeftSidebar from "@/components/layout/LeftSidebar";
 import RightSidebar from "@/components/layout/RightSidebar";
-import CreatePost 
-interface HomePageProps {
-  isDark: boolean;
-  toggleDark: () => void;
-  onLogout: () => void;
+import C () => void;
 }
 
 const HomePage: React.FC<HomePageProps> = ({ isDark, toggleDark, onLogout }) => {
