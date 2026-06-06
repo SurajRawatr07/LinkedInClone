@@ -5,18 +5,7 @@ import {
 interface N
       onClick={() => onRead(notification.id)}
       className={`flex items-start gap-4 px-4 py-4 cursor-pointer transition-all duration-150 hover:bg-gray-50 dark:hover:bg-[#2D3741] border-b border-gray-50 dark:border-gray-800/50 group ${
-        !notification.isRead ? "bg-[#EAF4FF]/40 dark:bg-[#0A66C2]/5" : ""
-      }`}
-    >
-      {/* Avatars */}
-      <div className="relative shrink-0">
-        <img
-          src={notification.actor.avatar}
-          alt={notification.actor.name}
-          className="w-14 h-14 rounded-full object-cover"
-        />
-        <div className={`absolute -bottom-1 -right-1 w-6 h-6 rounded-full ${bg} flex items-center justify-center border-2 border-white dark:border-[#1D2226]`}>
-          <Icon className={`w-3 h-3 ${color}`} />
+        !nocon className={`w-3 h-3 ${color}`} />
         </div>
       </div>
 
