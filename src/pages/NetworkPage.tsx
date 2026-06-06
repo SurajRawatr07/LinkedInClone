@@ -5,15 +5,7 @@ import {
 } from "lucide-react";
 import 
         ? { ...u, status: u.status === "pending" ? "none" : u.status === "connected" ? "connected" : "pending" }
-        : u
-    ));
-  };
-
-  const handleFollow = (userId: string) => {
-    setFollowingMap(prev => ({ ...prev, [userId]: !prev[userId] }));
-  };
-
-  const filtered = connections
+ tered = connections
     .filter(u => u.id !== currentUser.id && u.status !== "dismissed")
     .filter(u => !searchQuery || u.name.toLowerCase().includes(searchQuery.toLowerCase()) || u.headline.toLowerCase().includes(searchQuery.toLowerCase()));
 
