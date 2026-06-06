@@ -7,17 +7,7 @@ import
       
   return (
     <div className=relatw-md">
-            <h1 className="text-5xl font-bold leading-tight mb-6">
-              Welcome to your professional community
-            </h1>
-            <p className="text-xl text-white/80 leading-relaxed">
-              Connect with millions of professionals, discover new opportunities, and build the career you deserve.
-            </p>
-            <div className="flex gap-8 mt-10">
-              {[
-                { num: "1B+", label: "Members" },
-                { num: "200+", label: "Countries" },
-                { num: "60M+", label: "Companies" },
+            <h1 +", label: "Companies" },
               ].map((stat) => (
                 <div key={stat.label}>
                   <div className="text-3xl font-bold">{stat.num}</div>
