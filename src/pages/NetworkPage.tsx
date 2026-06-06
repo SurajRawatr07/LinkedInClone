@@ -7,17 +7,7 @@ import Navbar from "@/components/layout/Navbar";
 import { mockUsers, currentUser } from "@/constants/mockData";
 import type { User } from "@/types";
 
-interface NetworkPageProps {
-  isDark: boolean;
-  toggleDark: () => void;
-  onLogout: () => void;
-}
-
-const invitations = mockUsers.slice(2, 4);
-
-const NetworkPage: React.FC<NetworkPageProps> = ({ isDark, toggleDark, onLogout }) => {
-  const [activeTab, setActiveTab] = useState<"connections" | "requests" | "discover">("discover");
-  const [searchQuery, setSearchQuery] = useState("");
+interface Networ= useState("");
   const [connections, setConnections] = useState(
     mockUsers.map(u => ({ ...u, status: u.isConnected ? "connected" : "none" as "connected" | "pending" | "none" | "dismissed" }))
   );
