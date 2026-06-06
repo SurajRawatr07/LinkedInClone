@@ -6,15 +6,7 @@ inter}
         <p className={`text-xs mt-1.5 font-medium ${!notification.isRead ? "text-[#0A66C2] dark:text-[#5B9DD9]" : "text-[#666666] dark:text-[#B0B7BE]"}`}>
           {notification.timestamp}
         </p>
-      </div>
-
-      <div className="shrink-0 flex flex-col items-center gap-2">
-        {!notification.isRead && (
-          <div className="w-2.5 h-2.5 bg-[#0A66C2] rounded-full mt-2" />
-        )}
-        <button
-          onClick={(e) => { e.stopPropagation(); }}
-          className="p-1.5 rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors opacity-0 group-hover:opacity-100"
+      </die="p-1.5 rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors opacity-0 group-hover:opacity-100"
         >
           <Settings className="w-4 h-4 text-[#666666] dark:text-[#B0B7BE]" />
         </button>
