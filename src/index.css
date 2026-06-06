@@ -2,18 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  :root {
-    --ba1dIn button styles */
-  .btn-primary {
-    @apply bg-linkedin-blue hover:bg-linkedin-blue-hover text-white font-semibold px-5 py-2 rounded-full transition-all duration-200 active:scale-95;
-  }
-
-  .btn-secondary {
-    @apply border border-linkedin-blue text-linkedin-blue hover:bg-linkedin-blue-light dark:hover:bg-linkedin-blue/10 font-semibold px-5 py-2 rounded-full transition-all duration-200 active:scale-95;
-  }
-
-  .btn-ghost {
+@layer bs
+{
     @apply text-linkedin-text-secondary dark:text-linkedin-text-secondary-dark hover:text-linkedin-text dark:hover:text-linkedin-text-dark hover:bg-gray-100 dark:hover:bg-gray-700 font-medium px-3 py-2 rounded-lg transition-all duration-150;
   }
 
