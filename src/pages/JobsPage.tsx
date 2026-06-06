@@ -1,7 +1,68 @@
 import React, { useState } from "react";
 import {
   Search, MapPin, Filter, Bookmark, BookmarkCheck,
-  Briefnfo */}
+  Briefcase, Clock, Users, Zap, X, ChevronDown, Star, ExternalLink
+} from "lucide-react";
+import Navbar from "@/components/layout/Navbar";
+import { mockJobs } from "@/constants/mockData";
+import type { Job } from "@/types";
+import { formatNumber } from "@/lib/utils";
+import { JobCardSkeleton } from "@/components/features/SkeletonLoader";
+
+interface JobsPageProps {
+  isDark: boolean;
+  toggleDark: () => void;
+  onLogout: () => void;
+}
+
+const FILTERS = ["Easy Apply", "Remote", "Full-time", "Part-time", "Contract", "Internship", "$150K+", "$200K+"];
+
+const JobDetailPanel: React.FC<{ job: Job | null; onClose: () => void }> = ({ job, onClose }) => {
+  if (!job) return null;
+
+  return (
+    <div className="card h-full overflow-y-auto animate-slide-up">
+      <div className="sticky top-0 bg-white dark:bg-[#1D2226] z-10 border-b border-gray-100 dark:border-gray-700 px-5 py-3 flex items-center justify-between">
+        <h3 className="font-bold text-[#000000E6] dark:text-white text-sm">Job Details</h3>
+        <button onClick={onClose} className="p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors lg:hidden">
+          <X className="w-4 h-4 text-[#666666] dark:text-[#B0B7BE]" />
+        </button>
+      </div>
+
+      <div className="p-5">
+        {/* Company */}
+        <div className="flex items-start gap-4 mb-4">
+          <img src={job.companyLogo} alt={job.company} className="w-16 h-16 rounded-xl object-cover border border-gray-200 dark:border-gray-600 shadow-sm" />
+          <div>
+            <h2 className="text-xl font-bold text-[#000000E6] dark:text-white">{job.title}</h2>
+            <p className="text-base text-[#000000E6] dark:text-[#E7E9EA] font-medium">{job.company}</p>
+            <div className="flex items-center gap-1.5 mt-1">
+              <MapPin className="w-3.5 h-3.5 text-[#666666] dark:text-[#B0B7BE]" />
+              <span className="text-sm text-[#666666] dark:text-[#B0B7BE]">{job.location}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Badges */}
+        <div className="flex flex-wrap gap-2 mb-4">
+          {job.isNew && (
+            <span className="bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-bold px-2.5 py-1 rounded-full">
+              New
+            </span>
+          )}
+          {job.isEasyApply && (
+            <span className="bg-[#EAF4FF] dark:bg-[#0A66C2]/20 text-[#0A66C2] dark:text-[#5B9DD9] text-xs font-bold px-2.5 py-1 rounded-full flex items-center gap-1">
+              <Zap className="w-3 h-3" />Easy Apply
+            </span>
+          )}
+          {job.matchScore && (
+            <span className="bg-[#EAF4FF] dark:bg-[#0A66C2]/20 text-[#0A66C2] dark:text-[#5B9DD9] text-xs font-bold px-2.5 py-1 rounded-full flex items-center gap-1">
+              <Star className="w-3 h-3" />{job.matchScore}% match
+            </span>
+          )}
+        </div>
+
+        {/* Key Info */}
         <div className="grid grid-cols-2 gap-3 mb-4 p-4 bg-[#F3F2EF] dark:bg-[#2D3741] rounded-xl">
           {[
             { icon: Briefcase, label: "Job type", value: job.type },
