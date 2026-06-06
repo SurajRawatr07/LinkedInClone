@@ -1,13 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import {
-  Search, Edit, Phone, Video, Info, Send, Image,
-  Smile, Paperclip, MoreHorizontal","👍","🎉","🔥","💡","✅","🚀","💻","🙌","👏","😎","🤝","💯","⭐","🎯","💪","🌟","😄"];
-
-interface MessagingPageProps {
-  isDark: dConv, setSelectedConv] = useState<Conversation | null>(mockConversations[0]);
-  const [messages, setMessages] = useState<Message[]>(mockMessages);
-  const [messageText, setMessageText] = useState("");
-  const [searchQuery, setSearchQuery] = useState("");
+  SearcrchQuery, setSearchQuery] = useState("");
   const [showMobileChat, setShowMobileChat] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
   const [showEmoji, setShowEmoji] = useState(false);
