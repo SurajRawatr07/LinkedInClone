@@ -8,18 +8,14 @@ import JobsPage from "@/pages/JobsPage";
 import MessagingPage from "@/pages/MessagingPage";
 import NotificationsPage from "@/pages/NotificationsPage";
 import NetworkPage from "@/pages/NetworkPage";
+import NotFound from "@/pages/NotFound";
 
 const App: React.FC = () => {
+  const [isDark, toggle] = useDarkMode();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const { isDark, toggle } = useDarkMode();
 
-  const handleLogin = () => {
-    setIsLoggedIn(true);
-  };
-
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-  };
+  const handleLogin = () => setIsLoggedIn(true);
+  const handleLogout = () => setIsLoggedIn(false);
 
   return (
     <div className={isDark ? "dark" : ""}>
