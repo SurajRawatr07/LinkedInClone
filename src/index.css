@@ -9,22 +9,6 @@
   }
 
   .dark {
-    --background: 214 14% 13%;
-    --foreground: 210 17% 91%;
-    --card: 211 12% 15%;
-    --card-foreground: 210 17% 91%;
-    --border: 211 14% 24%;
-    --primary: 211 91% 55%;
-    --primary-foreground: 0 0% 100%;
-    --muted: 211 12% 20%;
-    --muted-foreground: 211 12% 65%;
-    --accent: 211 30% 22%;
-    --ring: 211 91% 55%;
-  }
-
-  * {
-    box-sizing: border-box;
-    margin: 0;
     padding: 0;
   }
 
