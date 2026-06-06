@@ -6,14 +6,7 @@ import
     const errs = val
       
   return (
-    <div className=relative z-10 flex flex-col justify-between p-12 text-white w-full">
-          <div className="flex items-center gap-2">
-            <div className="w-10 h-10 bg-white rounded-md flex items-center justify-center">
-              <Linkedin className="w-7 h-7 text-[#0A66C2]" />
-            </div>
-            <span className="text-2xl font-bold tracking-tight">LinkedIn</span>
-          </div>
-          <div className="max-w-md">
+    <div className=relatw-md">
             <h1 className="text-5xl font-bold leading-tight mb-6">
               Welcome to your professional community
             </h1>
