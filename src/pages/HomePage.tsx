@@ -1,8 +1,43 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import Navbar from "@/components/layout/Navbar";
-impo
+import LeftSidebar from "@/components/layout/LeftSidebar";
+import RightSidebar from "@/components/layout/RightSidebar";
+import CreatePost from "@/components/features/CreatePost";
+import PostCard from "@/components/features/PostCard";
+import { PostSkeleton } from "@/components/features/SkeletonLoader";
+import { mockPosts } from "@/constants/mockData";
+
+interface HomePageProps {
+  isDark: boolean;
+  toggleDark: () => void;
+  onLogout: () => void;
+}
+
 const HomePage: React.FC<HomePageProps> = ({ isDark, toggleDark, onLogout }) => {
-  consdingMore(false);
+  const [posts, setPosts] = useState(mockPosts);
+  const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [page, setPage] = useState(1);
+  const observerRef = useRef<IntersectionObserver | null>(null);
+  const sentinelRef = useRef<HTMLDivElement>(null);
+
+  // Initial load
+  useEffect(() => {
+    const t = setTimeout(() => setLoading(false), 900);
+    return () => clearTimeout(t);
+  }, []);
+
+  // Infinite scroll
+  const loadMore = useCallback(() => {
+    if (loadingMore || page >= 4) return;
+    setLoadingMore(true);
+    setTimeout(() => {
+      setPosts(prev => [
+        ...prev,
+        ...mockPosts.map(p => ({ ...p, id: `${p.id}-${page + 1}` })),
+      ]);
+      setPage(prev => prev + 1);
+      setLoadingMore(false);
     }, 1000);
   }, [loadingMore, page]);
 
