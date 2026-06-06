@@ -2,16 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import Navbar from "@/components/layout/Navbar";
 impo
 const HomePage: React.FC<HomePageProps> = ({ isDark, toggleDark, onLogout }) => {
-  const [posts, setPosts] = useState(mockPosts);
-  const [loading, setLoading] = useState(true);
-  const [loadingMore, setLoadingMore] = useState(false);
-  const [page, setPage] = useState(1);
-  const s = setTimeout(() => setLoading(false), 900);
-    return () => clearTimeout(t);
-  }, []);
-
-  // Infinite scroll
-  const loadMore = useCallback(() => {
+  consre = useCallback(() => {
     if (loadingMore || page >= 4) return;
     setLoadingMore(true);
     setTimeout(() => {
