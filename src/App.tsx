@@ -5,16 +5,6 @@ import LoginPage from "@/pages/LoginPage";
 import HomePafalse);
   };dIn ? (
             <>
-            ment={<NotificationsPage isDark={isDark} toggleDark={toggle} onLogout={handleLogout} />}
-              />
-              <Route
-                path="/network"
-                element={<NetworkPage isDark={isDark} toggleDark={toggle} onLogout={handleLogout} />}
-              />
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </>
-          )}
-        </Routes>
       </BrowserRouter>
     </div>
   );
