@@ -10,17 +10,7 @@ interface NotificationsPageProps {
 
 const NOTIF_ICONS: Record<string, { icon: React.FC<{ className?: string }>, bg: string, color: string }> = {
   like: { icon: ThumbsUp, bg: "bg-blue-100 dark:bg-blue-900/30", color: "text-blue-500" },
-  comment: { icon: MessageCircle, bg: "bg-green-100 dark:bg-green-900/30", color: "text-green-500" },
-  connection: { icon: UserPlus, bg: "bg-[#EAF4FF] dark:bg-[#0A66C2]/20", color: "text-[#0A66C2] dark:text-[#5B9DD9]" },
-  job: { icon: Briefcase, bg: "bg-purple-100 dark:bg-purple-900/30", color: "text-purple-500" },
-  message: { icon: MessageCircle, bg: "bg-blue-100 dark:bg-blue-900/30", color: "text-blue-500" },
-  birthday: { icon: Gift, bg: "bg-pink-100 dark:bg-pink-900/30", color: "text-pink-500" },
-  anniversary: { icon: Star, bg: "bg-yellow-100 dark:bg-yellow-900/30", color: "text-yellow-500" },
-  mention: { icon: AtSign, bg: "bg-orange-100 dark:bg-orange-900/30", color: "text-orange-500" },
-  repost: { icon: Repeat2, bg: "bg-green-100 dark:bg-green-900/30", color: "text-green-500" },
-};
-
-const NotificationItem: React.FC<{ notification: Notification; onRead: (id: string) => void }> = ({ notification, onRead }) => {
+  comment: { icReact.FC<{ notification: Notification; onRead: (id: string) => void }> = ({ notification, onRead }) => {
   const { icon: Icon, bg, color } = NOTIF_ICONS[notification.type] || NOTIF_ICONS.like;
 
   return (
