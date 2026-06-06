@@ -3,22 +3,7 @@ import {
   UserPlus, MessageSquare, Users, Globe, Search, Check,
   X, TrendingUp, Filter, Star, MapPin
 } from "lucide-react";
-import Navbar from "@/components/layout/Navbar";
-import { mockUsers, currentUser } from "@/constants/mockData";
-import type { User } from "@/types";
-
-interface Networ= useState("");
-  const [connections, setConnections] = useState(
-    mockUsers.map(u => ({ ...u, status: u.isConnected ? "connected" : "none" as "connected" | "pending" | "none" | "dismissed" }))
-  );
-  const [invites, setInvites] = useState(
-    invitations.map(u => ({ ...u, accepted: false, dismissed: false }))
-  );
-  const [followingMap, setFollowingMap] = useState<Record<string, boolean>>({});
-
-  const handleConnect = (userId: string) => {
-    setConnections(prev => prev.map(u =>
-      u.id === userId
+import 
         ? { ...u, status: u.status === "pending" ? "none" : u.status === "connected" ? "connected" : "pending" }
         : u
     ));
