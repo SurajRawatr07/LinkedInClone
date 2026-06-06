@@ -5,17 +5,7 @@ import LoginPage from "@/pages/LoginPage";
 import HomePage from "@/pages/HomePage";
 import ProfilePage from "@/pages/ProfilePage";
 import JobsPage from "@/pages/JobsPage";
-import MessagingPage from "@/pages/MessagingPage";
-import NotificationsPage from "@/pages/NotificationsPage";
-import NetworkPage from "@/pages/NetworkPage";
-
-const App: React.FC = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const { isDark, toggle } = useDarkMode();
-
-  const handleLogin = () => {
-    setIsLoggedIn(true);
-  };
+import MessagingPa
 
   const handleLogout = () => {
     setIsLoggedIn(false);
