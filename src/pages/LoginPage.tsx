@@ -4,11 +4,7 @@ import loginBg from "@/assets/login-bg.jpg";
 
 interfars = {};
     if (!email) e.email = "Email is required";
-    else if (!/\S+@\S+\.\S+/.test(email)) e.email = "Enter a valid email";
-    if (!password) e.password = "Password is required";
-    else if (password.length < 6) e.password = "Password must be at least 6 characters";
-    return e;
-  };
+    else if (!/
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
