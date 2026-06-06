@@ -5,14 +5,7 @@ import {
 interface N
       onClick={() => onRead(notification.id)}
       className={`flex items-start gap-4 px-4 py-4 cursor-pointer transition-all duration-150 hover:bg-gray-50 dark:hover:bg-[#2D3741] border-b border-gray-50 dark:border-gray-800/50 group ${
-        !nocon className={`w-3 h-3 ${color}`} />
-        </div>
-      </div>
-
-      <div className="flex-1 min-w-0">
-        <p className={`text-sm leading-relaxed ${!notification.isRead ? "font-semibold text-[#000000E6] dark:text-white" : "text-[#000000E6] dark:text-[#E7E9EA]"}`}>
-          {notification.content}
-        </p>
+        !nocon
         {notification.postPreview && (
           <p className="text-xs text-[#666666] dark:text-[#B0B7BE] mt-1 italic border-l-2 border-gray-200 dark:border-gray-600 pl-2 line-clamp-2">
             "{notification.postPreview}"
