@@ -6,12 +6,7 @@ import
     const errs = val
       
   return (
-    <div className="min-h-screen flex flex-col lg:flex-row bg-white dark:bg-[#1B1F23]">
-      {/* Left - Branding */}
-      <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden">
-        <img src={loginBg} alt="LinkedIn background" className="absolute inset-0 w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0A66C2]/80 via-[#004182]/60 to-[#001B4B]/90" />
-        <div className="relative z-10 flex flex-col justify-between p-12 text-white w-full">
+    <div className=relative z-10 flex flex-col justify-between p-12 text-white w-full">
           <div className="flex items-center gap-2">
             <div className="w-10 h-10 bg-white rounded-md flex items-center justify-center">
               <Linkedin className="w-7 h-7 text-[#0A66C2]" />
