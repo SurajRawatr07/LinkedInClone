@@ -1,13 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import {
   SearcrchQuery, setSearchQuery] = useState("");
-  constages, selectedConv]);
-
-  useEffect(() => {
-    const handler = (e: MouseEvent) => {
-      if (emojiRef.current && !emojiRef.current.contains(e.target as Node)) setShowEmoji(false);
-    };
-    document.addEventListener("mousedown", handler);
+  constaddEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
