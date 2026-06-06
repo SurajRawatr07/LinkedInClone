@@ -1,8 +1,274 @@
 import React, { useState, useRef, useEffect } from "react";
 import {
+  Search, Edit, Phone, Video, Info, Send, Image,
+  Smile, Paperclip, MoreHorizontal, Star, Archive,
+  ArrowLeft, Check, CheckCheck, Mic
+} from "lucide-react";
+import Navbar from "@/components/layout/Navbar";
 
-  useEfText("");
-    setShowE
+const EMOJI_LIST = [
+  "👍","🎉","🔥","💡","✅","🚀","💻","🙌","👏","😎",
+  "🤝","💯","⭐","🎯","💪","🌟","😄","❤️","🤔","🙏"
+];
+
+interface MessagingPageProps {
+  isDark: boolean;
+  toggleDark: () => void;
+  onLogout: () => void;
+}
+
+interface Participant {
+  id: string;
+  name: string;
+  avatar: string;
+  headline: string;
+}
+
+interface LastMessage {
+  senderId: string;
+  content: string;
+  timestamp: string;
+}
+
+interface Conversation {
+  id: string;
+  participant: Participant;
+  lastMessage: LastMessage;
+  unreadCount: number;
+  isOnline: boolean;
+  isPinned?: boolean;
+}
+
+interface Message {
+  id: string;
+  senderId: string;
+  content: string;
+  timestamp: string;
+  isRead: boolean;
+  type: "text" | "image";
+}
+
+const currentUser = { id: "u1", name: "Suraj Rawat" };
+
+const mockConversations: Conversation[] = [
+  {
+    id: "c1",
+    participant: {
+      id: "u2",
+      name: "Priya Sharma",
+      avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop&crop=face",
+      headline: "Senior Frontend Developer at Amazon",
+    },
+    lastMessage: { senderId: "u2", content: "Hey! Saw your LinkedIn Clone project — it looks amazing!", timestamp: "2m ago" },
+    unreadCount: 3,
+    isOnline: true,
+    isPinned: true,
+  },
+  {
+    id: "c2",
+    participant: {
+      id: "u3",
+      name: "Rahul Gupta",
+      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face",
+      headline: "Full Stack Developer at Flipkart",
+    },
+    lastMessage: { senderId: "u1", content: "Sure, let's schedule a call tomorrow!", timestamp: "1h ago" },
+    unreadCount: 0,
+    isOnline: true,
+  },
+  {
+    id: "c3",
+    participant: {
+      id: "u4",
+      name: "Ananya Verma",
+      avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face",
+      headline: "React Developer at Swiggy",
+    },
+    lastMessage: { senderId: "u4", content: "Have you tried using React Query for state management?", timestamp: "3h ago" },
+    unreadCount: 1,
+    isOnline: false,
+  },
+  {
+    id: "c4",
+    participant: {
+      id: "u5",
+      name: "Vikram Singh",
+      avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop&crop=face",
+      headline: "Software Engineer at Google",
+    },
+    lastMessage: { senderId: "u5", content: "Your DSA solutions are really well optimised 🔥", timestamp: "1d ago" },
+    unreadCount: 0,
+    isOnline: false,
+  },
+  {
+    id: "c5",
+    participant: {
+      id: "u6",
+      name: "Sneha Patel",
+      avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop&crop=face",
+      headline: "UI/UX Designer at CRED",
+    },
+    lastMessage: { senderId: "u1", content: "Thanks for the design feedback! Really helpful 🙌", timestamp: "2d ago" },
+    unreadCount: 0,
+    isOnline: true,
+  },
+  {
+    id: "c6",
+    participant: {
+      id: "u7",
+      name: "Arjun Mehta",
+      avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face",
+      headline: "Backend Developer at Razorpay",
+    },
+    lastMessage: { senderId: "u7", content: "Let me know when you need REST API integration help.", timestamp: "3d ago" },
+    unreadCount: 0,
+    isOnline: false,
+  },
+];
+
+const mockMessages: Message[] = [
+  {
+    id: "m1",
+    senderId: "u2",
+    content: "Hey Suraj! I saw your LinkedIn Clone project on GitHub.",
+    timestamp: "10:00 AM",
+    isRead: true,
+    type: "text",
+  },
+  {
+    id: "m2",
+    senderId: "u2",
+    content: "The UI looks incredibly close to the real LinkedIn! Amazing work 🔥",
+    timestamp: "10:01 AM",
+    isRead: true,
+    type: "text",
+  },
+  {
+    id: "m3",
+    senderId: "u1",
+    content: "Thank you so much! I spent a lot of time on the details — especially the dark mode and responsive design.",
+    timestamp: "10:03 AM",
+    isRead: true,
+    type: "text",
+  },
+  {
+    id: "m4",
+    senderId: "u2",
+    content: "It really shows! Did you build it with React + Tailwind?",
+    timestamp: "10:04 AM",
+    isRead: true,
+    type: "text",
+  },
+  {
+    id: "m5",
+    senderId: "u1",
+    content: "Yes! React, TypeScript, and Tailwind CSS. No backend — all mock data for now.",
+    timestamp: "10:06 AM",
+    isRead: true,
+    type: "text",
+  },
+  {
+    id: "m6",
+    senderId: "u2",
+    content: "That's impressive for a frontend-only project! Have you thought about adding a real backend?",
+    timestamp: "10:08 AM",
+    isRead: true,
+    type: "text",
+  },
+  {
+    id: "m7",
+    senderId: "u1",
+    content: "Definitely planning to! Thinking about Supabase for auth and database. What do you think? 🚀",
+    timestamp: "10:10 AM",
+    isRead: true,
+    type: "text",
+  },
+  {
+    id: "m8",
+    senderId: "u2",
+    content: "Great choice! Supabase is perfect for this kind of app. Let me know if you need help with the integration.",
+    timestamp: "10:12 AM",
+    isRead: false,
+    type: "text",
+  },
+  {
+    id: "m9",
+    senderId: "u2",
+    content: "Hey! Saw your LinkedIn Clone project — it looks amazing!",
+    timestamp: "2m ago",
+    isRead: false,
+    type: "text",
+  },
+];
+
+const MessagingPage: React.FC<MessagingPageProps> = ({ isDark, toggleDark, onLogout }) => {
+  const [conversations, setConversations] = useState(mockConversations);
+  const [selectedConv, setSelectedConv] = useState<Conversation | null>(mockConversations[0]);
+  const [messages, setMessages] = useState<Message[]>(mockMessages);
+  const [messageText, setMessageText] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showMobileChat, setShowMobileChat] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
+  const [showEmoji, setShowEmoji] = useState(false);
+  const [activeFilter, setActiveFilter] = useState<"Focused" | "Other">("Focused");
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const emojiRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!selectedConv) return;
+    const t = setTimeout(() => setIsTyping(false), 3000);
+    return () => clearTimeout(t);
+  }, [messages, selectedConv]);
+
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (emojiRef.current && !emojiRef.current.contains(e.target as Node)) setShowEmoji(false);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, selectedConv]);
+
+  const sendMessage = () => {
+    if (!messageText.trim() || !selectedConv) return;
+    const newMsg: Message = {
+      id: `msg${Date.now()}`,
+      senderId: currentUser.id,
+      content: messageText.trim(),
+      timestamp: "Just now",
+      isRead: false,
+      type: "text",
+    };
+    setMessages(prev => [...prev, newMsg]);
+    setMessageText("");
+    setShowEmoji(false);
+    setConversations(prev =>
+      prev.map(c => c.id === selectedConv.id ? { ...c, unreadCount: 0 } : c)
+    );
+    setTimeout(() => setIsTyping(true), 800);
+    setTimeout(() => {
+      setIsTyping(false);
+      const replies = [
+        "That sounds great! Let me think about it.",
+        "Absolutely! I'll get back to you soon.",
+        "👍 Thanks for sharing!",
+        "Interesting perspective! 🔥",
+        "Amazing work as always! 🚀",
+      ];
+      const reply: Message = {
+        id: `msg${Date.now()}-reply`,
+        senderId: selectedConv.participant.id,
+        content: replies[Math.floor(Math.random() * replies.length)],
+        timestamp: "Just now",
+        isRead: true,
+        type: "text",
+      };
+      setMessages(prev => [...prev, reply]);
+    }, 2500);
     setTimeout(() => textareaRef.current?.focus(), 100);
   };
 
@@ -89,8 +355,14 @@ import {
                 >
                   <div className="relative shrink-0">
                     <img src={conv.participant.avatar} alt={conv.participant.name} className="w-12 h-12 rounded-full object-cover" />
-                    {conv.isOnline && <div className="absolute bottom-0.5 right-0.5 w-3.5 h-3.5 bg-green-500 border-2 border-white dark:border-[#1D2226] rounded-full" />}
-                    {conv.isPinned && <div className="absolute -top-1 -right-1 w-4 h-4 bg-[#0A66C2] rounded-full flex items-center justify-center"><span className="text-[8px] text-white">📌</span></div>}
+                    {conv.isOnline && (
+                      <div className="absolute bottom-0.5 right-0.5 w-3.5 h-3.5 bg-green-500 border-2 border-white dark:border-[#1D2226] rounded-full" />
+                    )}
+                    {conv.isPinned && (
+                      <div className="absolute -top-1 -right-1 w-4 h-4 bg-[#0A66C2] rounded-full flex items-center justify-center">
+                        <span className="text-[8px] text-white">📌</span>
+                      </div>
+                    )}
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between mb-0.5">
@@ -112,7 +384,9 @@ import {
                             {conv.unreadCount}
                           </span>
                         )}
-                        {conv.isPinned && <Star className="w-3 h-3 text-[#0A66C2] opacity-0 group-hover:opacity-100 transition-opacity" />}
+                        {conv.isPinned && (
+                          <Star className="w-3 h-3 text-[#0A66C2] opacity-0 group-hover:opacity-100 transition-opacity" />
+                        )}
                         <Archive className="w-3.5 h-3.5 text-[#666666] dark:text-[#B0B7BE] opacity-0 group-hover:opacity-100 transition-opacity" />
                       </div>
                     </div>
@@ -173,7 +447,6 @@ import {
 
               {/* Messages */}
               <div className="flex-1 overflow-y-auto p-4 space-y-3">
-                {/* Date divider */}
                 <div className="flex items-center gap-3 my-2">
                   <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700" />
                   <span className="text-[11px] text-[#666666] dark:text-[#B0B7BE] font-medium shrink-0">Yesterday</span>
@@ -192,7 +465,11 @@ import {
                       {!isSent && (
                         <div className="w-8 h-8 shrink-0">
                           {showAvatar && (
-                            <img src={selectedConv.participant.avatar} alt={selectedConv.participant.name} className="w-8 h-8 rounded-full object-cover" />
+                            <img
+                              src={selectedConv.participant.avatar}
+                              alt={selectedConv.participant.name}
+                              className="w-8 h-8 rounded-full object-cover"
+                            />
                           )}
                         </div>
                       )}
@@ -250,7 +527,11 @@ import {
                           {EMOJI_LIST.map(emoji => (
                             <button
                               key={emoji}
-                              onClick={() => { setMessageText(prev => prev + emoji); setShowEmoji(false); textareaRef.current?.focus(); }}
+                              onClick={() => {
+                                setMessageText(prev => prev + emoji);
+                                setShowEmoji(false);
+                                textareaRef.current?.focus();
+                              }}
                               className="text-lg hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg p-1 transition-colors hover:scale-125 transform"
                             >
                               {emoji}
