@@ -1,13 +1,7 @@
 import React, { useState } from "react";
 import {
   Bell, ThumbsUp, MessageCircle, UserPlus, Briefcase,
-  Heart, Gift, Star, AtSign, Repeat2, Settings, Check, CheckCheck
-} from "lucide-react";
-import Navbar from "@/components/layout/Navbar";
-import { mockNotifications } from "@/constants/mockData";
-import type { Notification } from "@/types";
-import { NotificationSkeleton } from "@/components/features/SkeletonLoader";
-
+  Heart, Gift, S
 interface NotificationsPageProps {
   isDark: boolean;
   toggleDark: () => void;
