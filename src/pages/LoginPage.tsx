@@ -8,17 +8,8 @@ interfars = {};
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const errs = validate();
-    if (Object.keys(errs).length > 0) { setErrors(errs); return; }
-    setLoading(true);
-    setTimeout(() => { setLoading(false); onLogin(); }, 1200);
-  };
-
-  const handleGoogle = () => {
-    setLoading(true);
-    setTimeout(() => { setLoading(false); onLogin(); }, 800);
-  };
-
+    const errs = val
+      
   return (
     <div className="min-h-screen flex flex-col lg:flex-row bg-white dark:bg-[#1B1F23]">
       {/* Left - Branding */}
