@@ -7,16 +7,7 @@ inter}tions(prev => prev.map(n => ({ ...n, isRead: true })));
 
   const filtered = notifications.filter(n => {
     if (er */}
-            <div className="flex items-center justify-between px-5 pt-5 pb-3">
-              <div>
-                <h1 className="text-xl font-bold text-[#000000E6] dark:text-white flex items-center gap-2">
-                  <Bell className="w-5 h-5" />
-                  Notifications
-                  {unreadCount > 0 && (
-                    <span className="bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
-                      {unreadCount} new
-                    </span>
-                  )}
+            <div classN
                 </h1>
                 <p className="text-sm text-[#666666] dark:text-[#B0B7BE] mt-0.5">
                   Stay up to date with your professional world
