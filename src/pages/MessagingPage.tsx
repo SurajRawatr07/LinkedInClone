@@ -2,14 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import {
   SearcrchQuery, setSearchQuery] = useState("");
   const [showMobileChat, setShowMobileChat] = useState(false);
-  const [isTyping, setIsTyping] = useState(false);
-  const [showEmoji, setShowEmoji] = useState(false);
-  const [activeFilter, setActiveFilter] = useState<"Focused" | "Other">("Focused");
-  const messagesEndRef = useRef<HTMLDivElement>(null);
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const emojiRef = useRef<HTMLDivElement>(null);
-
-  // Simulate typing indicator
+  const [ping indicator
   useEffect(() => {
     if (!selectedConv) return;
     const t = setTimeout(() => setIsTyping(false), 3000);
