@@ -5,16 +5,6 @@
 @layer base {
   :root {
     --ba1% 95%;
-    --ring: 211 91% 40%;
-  }
-
-  .dark {
-    padding: 0;
-  }
-
-  html {
-    scroll-behavior: smooth;
-  }
 
   body {
     @apply font-sans antialiased;
