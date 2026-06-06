@@ -4,13 +4,7 @@ import {
   Heart, Gift, S
 interface NotificationsPageProps {
   isDark: boolean;
-  toggleDark: () => void;
-  onLogout: () => void;
-}
-
-const NOTIF_ICONS: Record<string, { icon: React.FC<{ className?: string }>, bg: string, color: string }> = {
-  like: { icon: ThumbsUp, bg: "bg-blue-100 dark:bg-blue-900/30", color: "text-blue-500" },
-  comment: { icReact.FC<{ notification: Notification; onRead: (id: string) => void }> = ({ notification, onRead }) => {
+  tog]ent: { icReact.FC<{ notification: Notification; onRead: (id: string) => void }> = ({ notification, onRead }) => {
   const { icon: Icon, bg, color } = NOTIF_ICONS[notification.type] || NOTIF_ICONS.like;
 
   return (
