@@ -2,13 +2,7 @@ import React, { useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useDarkMode } from "@/hooks/useDarkMode";
 import LoginPage from "@/pages/LoginPage";
-import HomePage from "@/pages/HomePage";
-import ProfilePage from "@/pages/ProfilePage";
-import JobsPage from "@/pages/JobsPage";
-import MessagingPa
-
-  const handleLogout = () => {
-    setIsLoggedIn(false);
+import HomePafalse);
   };dIn ? (
             <>
               <Route path="/login" element={<LoginPage onLogin={handleLogin} />} />
