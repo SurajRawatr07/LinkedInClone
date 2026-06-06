@@ -4,14 +4,7 @@ import {
   Smile, Paperclip, MoreHorizontal","👍","🎉","🔥","💡","✅","🚀","💻","🙌","👏","😎","🤝","💯","⭐","🎯","💪","🌟","😄"];
 
 interface MessagingPageProps {
-  isDark: boolean;
-  toggleDark: () => void;
-  onLogout: () => void;
-}
-
-const MessagingPage: React.FC<MessagingPageProps> = ({ isDark, toggleDark, onLogout }) => {
-  const [conversations, setConversations] = useState(mockConversations);
-  const [selectedConv, setSelectedConv] = useState<Conversation | null>(mockConversations[0]);
+  isDark: dConv, setSelectedConv] = useState<Conversation | null>(mockConversations[0]);
   const [messages, setMessages] = useState<Message[]>(mockMessages);
   const [messageText, setMessageText] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
