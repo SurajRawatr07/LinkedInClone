@@ -1,9 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
 import {
-  SearcrchQuery, setSearchQuery] = useState("");
-  constaddEventListener("mousedown", handler);
-    return () => document.removeEventListener("mousedown", handler);
-  }, []);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
