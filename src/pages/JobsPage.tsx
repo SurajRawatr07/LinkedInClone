@@ -4,16 +4,7 @@ import {
   Briefcase, Clock, Users, Zap, X, ChevronDown, Star, ExternalLink
 } from "lucide-react";
 import Navbar freton } from "@/components/features/SkeletonLoader";
-
-interface JobsPageProps {
-  isDark: boolean;
-  toggleDark: () => void;
-  onLogout: () => void;
-}
-
-const FILTERS = ["Easy Apply", "Remote", "Full-time", "Part-time", "Contract", "Internship", "$150K+", "$200K+"];
-
-const JobDetailPanel: React.FC<{ job: Job | null; onClose: () => void }> = ({ job, onClose }) => {
+el: React.FC<{ job: Job | null; onClose: () => void }> = ({ job, onClose }) => {
   if (!job) return null;
 
   return (
