@@ -2,14 +2,7 @@ import React, { useState } from "react";
 import { Eye, EyeOff, Linkedin } from "lucide-react";
 import loginBg from "@/assets/login-bg.jpg";
 
-interface LoginPageProps {
-  onLogin: () => void;
-}
-
-const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const  errors = {};
+interfars = {};
     if (!email) e.email = "Email is required";
     else if (!/\S+@\S+\.\S+/.test(email)) e.email = "Enter a valid email";
     if (!password) e.password = "Password is required";
