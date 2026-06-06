@@ -2,13 +2,7 @@ import React, { useState } from "react";
 import {
   Bell, ThumbsUp, MessageCircle, UserPlus, Briefcase,
   Heart, Gift, S
-interface NotificationsPageProps {
-  isDark: boolean;
-  tog]ent: { icReact.FC<{ notification: Notification; onRead: (id: string) => void }> = ({ notification, onRead }) => {
-  const { icon: Icon, bg, color } = NOTIF_ICONS[notification.type] || NOTIF_ICONS.like;
-
-  return (
-    <div
+interface N
       onClick={() => onRead(notification.id)}
       className={`flex items-start gap-4 px-4 py-4 cursor-pointer transition-all duration-150 hover:bg-gray-50 dark:hover:bg-[#2D3741] border-b border-gray-50 dark:border-gray-800/50 group ${
         !notification.isRead ? "bg-[#EAF4FF]/40 dark:bg-[#0A66C2]/5" : ""
