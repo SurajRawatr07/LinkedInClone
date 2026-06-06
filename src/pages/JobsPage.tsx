@@ -3,16 +3,7 @@ import {
   Search, MapPin, Filter, Bookmark, BookmarkCheck,
   Briefcase, Clock, Users, Zap, X, ChevronDown, Star, ExternalLink
 } from sName="flex items-start gap-4 mb-4">
-          <img src={job.companyLogo} alt={job.company} className="w-16 h-16 rounded-xl object-cover border border-gray-200 dark:border-gray-600 shadow-sm" />
-          <div>
-            <h2 className="text-xl font-bold text-[#000000E6] dark:text-white">{job.title}</h2>
-         
-        {/* Badges */}
-        <div className="flex flex-wrap gap-2 mb-4">
-          {job.isNew && (
-            <span className="bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-bold px-2.5 py-1 rounded-full">
-              New
-            </span>
+          <
           )}
           {job.isEasyApply && (
             <span className="bg-[#EAF4FF] dark:bg-[#0A66C2]/20 text-[#0A66C2] dark:text-[#5B9DD9] text-xs font-bold px-2.5 py-1 rounded-full flex items-center gap-1">
