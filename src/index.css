@@ -6,18 +6,6 @@
   :root {
     --ba1% 95%;
 
-  body {
-    @apply font-sans antialiased;
-    background-color: #F3F2EF;
-    color: rgba(0, 0, 0, 0.9);
-    font-size: 16px;
-    line-height: 1.5;
-  }
-
-  .dark body {
-    background-color: #1B1F23;
-    color: #E7E9EA;
-  }
 }
 
 @layer components {
