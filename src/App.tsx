@@ -10,18 +10,6 @@ import
             <>
               <Route path="/login" element={<LoginPage onLogin={handleLogin} />} />
       ath="/jobs"
-                element={<JobsPage isDark={isDark} toggleDark={toggle} onLogout={handleLogout} />}
-              />
-              <Route
-                path="/messaging"
-                element={<MessagingPage isDark={isDark} toggleDark={toggle} onLogout={handleLogout} />}
-              />
-              <Route
-                path="/notifications"
-                element={<NotificationsPage isDark={isDark} toggleDark={toggle} onLogout={handleLogout} />}
-              />
-              <Route
-                path="/network"
                 element={<NetworkPage isDark={isDark} toggleDark={toggle} onLogout={handleLogout} />}
               />
               <Route path="*" element={<Navigate to="/" replace />} />
