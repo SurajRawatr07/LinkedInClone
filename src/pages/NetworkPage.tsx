@@ -1,20 +1,5 @@
 import React, { useState } from "react";
-import {
-  UserPlus, MessageSquare, Users, Globe, Search, Check,
-  X, TrendingUp, Filter, Star, MapPin
-} from "lucide-react";
 import 
-        ? { ...u, status: u.status === "pending" ? "none" : u.status === "connected" ? "connected" : "pending" }
- tered = connections
-    .filter(u => u.id !== currentUser.id && u.status !== "dismissed")
-    .filter(u => !searchQuery || u.name.toLowerCase().includes(searchQuery.toLowerCase()) || u.headline.toLowerCase().includes(searchQuery.toLowerCase()));
-
-  const tabs = [
-    { id: "discover", label: "Discover", count: null },
-    { id: "requests", label: "Invitations", count: invites.filter(i => !i.dismissed && !i.accepted).length },
-    { id: "connections", label: "Connections", count: connections.filter(u => u.status === "connected").length },
-  ] as const;
-
   return (
     <div className="min-h-screen bg-[#F3F2EF] dark:bg-[#1B1F23]">
       <Navbar isDark={isDark} toggleDark={toggleDark} onLogout={onLogout} notificationCount={3} />
