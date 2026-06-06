@@ -1,10 +1,69 @@
 import React, { useState } from "react";
-import 
+import {
+  UserPlus, MessageSquare, Users, Globe, Search, Check,
+  X, TrendingUp, Filter, Star, MapPin
+} from "lucide-react";
+import Navbar from "@/components/layout/Navbar";
+import { mockUsers, currentUser } from "@/constants/mockData";
+import type { User } from "@/types";
+
+interface NetworkPageProps {
+  isDark: boolean;
+  toggleDark: () => void;
+  onLogout: () => void;
+}
+
+const invitations = mockUsers.slice(2, 4);
+
+const NetworkPage: React.FC<NetworkPageProps> = ({ isDark, toggleDark, onLogout }) => {
+  const [activeTab, setActiveTab] = useState<"connections" | "requests" | "discover">("discover");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [connections, setConnections] = useState(
+    mockUsers.map(u => ({ ...u, status: u.isConnected ? "connected" : "none" as "connected" | "pending" | "none" | "dismissed" }))
+  );
+  const [invites, setInvites] = useState(
+    invitations.map(u => ({ ...u, accepted: false, dismissed: false }))
+  );
+  const [followingMap, setFollowingMap] = useState<Record<string, boolean>>({});
+
+  const handleConnect = (userId: string) => {
+    setConnections(prev => prev.map(u =>
+      u.id === userId
+        ? { ...u, status: u.status === "pending" ? "none" : u.status === "connected" ? "connected" : "pending" }
+        : u
+    ));
+  };
+
+  const handleFollow = (userId: string) => {
+    setFollowingMap(prev => ({ ...prev, [userId]: !prev[userId] }));
+  };
+
+  const filtered = connections
+    .filter(u => u.id !== currentUser.id && u.status !== "dismissed")
+    .filter(u => !searchQuery || u.name.toLowerCase().includes(searchQuery.toLowerCase()) || u.headline.toLowerCase().includes(searchQuery.toLowerCase()));
+
+  const tabs = [
+    { id: "discover", label: "Discover", count: null },
+    { id: "requests", label: "Invitations", count: invites.filter(i => !i.dismissed && !i.accepted).length },
+    { id: "connections", label: "Connections", count: connections.filter(u => u.status === "connected").length },
+  ] as const;
+
   return (
     <div className="min-h-screen bg-[#F3F2EF] dark:bg-[#1B1F23]">
       <Navbar isDark={isDark} toggleDark={toggleDark} onLogout={onLogout} notificationCount={3} />
 
-      <main 
+      <main className="max-w-[900px] mx-auto px-4 pt-16 pb-20 md:pb-6 mt-4">
+        {/* Header */}
+        <div className="card p-5 mb-3">
+          <div className="flex items-center justify-between flex-wrap gap-3">
+            <div>
+              <h1 className="text-xl font-bold text-[#000000E6] dark:text-white flex items-center gap-2">
+                <Users className="w-5 h-5 text-[#0A66C2]" />
+                My Network
+              </h1>
+              <p className="text-sm text-[#666666] dark:text-[#B0B7BE] mt-0.5">
+                Manage your connections and grow your network
+              </p>
             </div>
             <div className="flex items-center gap-2 bg-[#EEF3F8] dark:bg-[#38434F] rounded-lg px-3 py-2 w-full sm:w-64">
               <Search className="w-4 h-4 text-[#666666] dark:text-[#B0B7BE] shrink-0" />
@@ -249,4 +308,18 @@ import
                           ? "border-[#0A66C2] text-[#0A66C2] bg-[#EAF4FF] dark:bg-[#0A66C2]/20"
                           : "border-[#0A66C2] text-[#0A66C2] hover:bg-[#EAF4FF] dark:hover:bg-[#0A66C2]/10"
                       }`}
-           e;
+                    >
+                      {followingMap[user.id] ? "Following" : "Follow"}
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+      </main>
+    </div>
+  );
+};
+
+export default NetworkPage;
