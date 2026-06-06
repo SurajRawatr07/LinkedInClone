@@ -1,2 +1,8 @@
 /* App-level styles - LinkedIn Clone */
 * {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  padding: 0;
+}
