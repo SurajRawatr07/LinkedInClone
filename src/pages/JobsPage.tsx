@@ -6,14 +6,7 @@ import {
           <img src={job.companyLogo} alt={job.company} className="w-16 h-16 rounded-xl object-cover border border-gray-200 dark:border-gray-600 shadow-sm" />
           <div>
             <h2 className="text-xl font-bold text-[#000000E6] dark:text-white">{job.title}</h2>
-            <p className="text-base text-[#000000E6] dark:text-[#E7E9EA] font-medium">{job.company}</p>
-            <div className="flex items-center gap-1.5 mt-1">
-              <MapPin className="w-3.5 h-3.5 text-[#666666] dark:text-[#B0B7BE]" />
-              <span className="text-sm text-[#666666] dark:text-[#B0B7BE]">{job.location}</span>
-            </div>
-          </div>
-        </div>
-
+         
         {/* Badges */}
         <div className="flex flex-wrap gap-2 mb-4">
           {job.isNew && (
