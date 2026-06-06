@@ -1,16 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import {
 
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messagesrrentUser.id,
-      content: messageText.trim(),
-      timestamp: "Just now",
-      isRead: false,
-      type: "text",
-    };
-    setMessages(prev => [...prev, newMsg]);
-    setMessageText("");
+  useEfText("");
     setShowEmoji(false);
     setConversations(prev =>
       prev.map(c => c.id === selectedConv.id ? { ...c, unreadCount: 0 } : c)
