@@ -6,12 +6,7 @@ const HomePage: React.FC<HomePageProps> = ({ isDark, toggleDark, onLogout }) => 
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
   const [page, setPage] = useState(1);
-  const observerRef = useRef<IntersectionObserver | null>(null);
-  const sentinelRef = useRef<HTMLDivElement>(null);
-
-  // Initial load
-  useEffect(() => {
-    const t = setTimeout(() => setLoading(false), 900);
+  const s = setTimeout(() => setLoading(false), 900);
     return () => clearTimeout(t);
   }, []);
 
