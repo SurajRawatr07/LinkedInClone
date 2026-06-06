@@ -3,21 +3,7 @@ import {
   Bell, ThumbsUp, MessageCircle, UserPlus, Briefcase,
   Heart, Gift, S
 inter}
-        <p className={`text-xs mt-1.5 font-medium ${!notification.isRead ? "text-[#0A66C2] dark:text-[#5B9DD9]" : "text-[#666666] dark:text-[#B0B7BE]"}`}>
-          {notification.timestamp}
-        </p>
-      </die="p-1.5 rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors opacity-0 group-hover:opacity-100"
-        >
-          <Settings className="w-4 h-4 text-[#666666] dark:text-[#B0B7BE]" />
-        </button>
-      </div>
-    </div>
-  );
-};
-
-const NotificationsPage: React.FC<NotificationsPageProps> = ({ isDark, toggleDark, onLogout }) => {
-  const [notifications, setNotifications] = useState(mockNotifications);
-  const [activeFilter, setActiveFilter] = useState<"all" | "unread" | "jobs" | "mentions">("all");
+        <p class setActiveFilter] = useState<"all" | "unread" | "jobs" | "mentions">("all");
   const [loading] = useState(false);
 
   const unreadCount = notifications.filter(n => !n.isRead).length;
