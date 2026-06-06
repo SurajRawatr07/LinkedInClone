@@ -2,23 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import {
 
   useEfText("");
-    setShowEmoji(false);
-    setConversations(prev =>
-      prev.map(c => c.id === selectedConv.id ? { ...c, unreadCount: 0 } : c)
-    );
-    // Simulate reply typing
-    setTimeout(() => setIsTyping(true), 800);
-    setTimeout(() => {
-      setIsTyping(false);
-      csg${Date.now()}-reply`,
-        senderId: selectedConv.participant.id,
-        content: replies[Math.floor(Math.random() * replies.length)],
-        timestamp: "Just now",
-        isRead: true,
-        type: "text",
-      };
-      setMessages(prev => [...prev, reply]);
-    }, 2500);
+    setShowE
     setTimeout(() => textareaRef.current?.focus(), 100);
   };
 
