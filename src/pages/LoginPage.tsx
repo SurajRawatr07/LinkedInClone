@@ -4,9 +4,11 @@ import loginBg from "@/assets/login-bg.jpg";
 
 interface LoginPageProps {
   onLogin: () => void;
+  onGoToSignup?: () => void;
+  onForgotPassword?: () => void;
 }
 
-const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
+const LoginPage: React.FC<LoginPageProps> = ({ onLogin, onGoToSignup, onForgotPassword }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -28,7 +30,13 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
     const errs = validate();
     if (Object.keys(errs).length > 0) { setErrors(errs); return; }
     setLoading(true);
-    setTimeout(() => { setLoading(false); onLogin(); }, 1200);
+    setTimeout(() => {
+      setLoading(false);
+      if (remember) {
+        try { localStorage.setItem("linkedin_remember", email); } catch {}
+      }
+      onLogin();
+    }, 1200);
   };
 
   const handleGoogle = () => {
@@ -156,7 +164,11 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
                   />
                   <span className="text-sm text-[#000000E6] dark:text-white">Remember me</span>
                 </label>
-                <button type="button" className="text-sm font-semibold text-[#0A66C2] hover:underline">
+                <button
+                  type="button"
+                  onClick={onForgotPassword}
+                  className="text-sm font-semibold text-[#0A66C2] hover:underline"
+                >
                   Forgot password?
                 </button>
               </div>
@@ -177,7 +189,10 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
 
             <p className="text-center text-sm text-[#666666] dark:text-[#B0B7BE] mt-6">
               New to LinkedIn?{" "}
-              <button className="font-bold text-[#0A66C2] hover:underline">
+              <button
+                onClick={onGoToSignup}
+                className="font-bold text-[#0A66C2] hover:underline"
+              >
                 Join now
               </button>
             </p>

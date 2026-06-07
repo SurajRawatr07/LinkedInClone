@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import {
   ThumbsUp, MessageCircle, Repeat2, Send,
   MoreHorizontal, Globe, Bookmark, BookmarkCheck,
-  ChevronDown, ChevronUp, X
+  ChevronDown, ChevronUp, X, Copy, Share2,
+  UserPlus, UserMinus, Flag, EyeOff, Link2, Check
 } from "lucide-react";
 import type { Post } from "@/types";
 import { formatNumber } from "@/lib/utils";
@@ -21,6 +22,9 @@ interface PostCardProps {
   post: Post;
 }
 
+// Simple toast hook
+let toastTimeout: ReturnType<typeof setTimeout> | null = null;
+
 const PostCard: React.FC<PostCardProps> = ({ post }) => {
   const [liked, setLiked] = useState(post.isLiked);
   const [likeCount, setLikeCount] = useState(post.likes);
@@ -33,6 +37,16 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
   const [expanded, setExpanded] = useState(false);
   const [currentImage, setCurrentImage] = useState(0);
   const [showMenu, setShowMenu] = useState(false);
+  const [showShareMenu, setShowShareMenu] = useState(false);
+  const [following, setFollowing] = useState(false);
+  const [toast, setToast] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
+
+  const showToast = (msg: string) => {
+    setToast(msg);
+    if (toastTimeout) clearTimeout(toastTimeout);
+    toastTimeout = setTimeout(() => setToast(null), 2500);
+  };
 
   const TEXT_LIMIT = 280;
   const isLong = post.content.length > TEXT_LIMIT;
@@ -50,6 +64,31 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
       setActiveReaction(key);
     }
     setShowReactions(false);
+  };
+
+  const handleSave = () => {
+    setSaved(!saved);
+    showToast(saved ? "Post removed from saved items" : "Post saved to your list");
+    setShowMenu(false);
+  };
+
+  const handleRepost = () => {
+    setReposted(!reposted);
+    setRepostCount(reposted ? repostCount - 1 : repostCount + 1);
+    showToast(reposted ? "Repost removed" : "Reposted to your followers");
+  };
+
+  const handleCopyLink = () => {
+    setCopied(true);
+    showToast("Link copied to clipboard!");
+    setShowShareMenu(false);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleFollow = () => {
+    setFollowing(!following);
+    showToast(following ? `Unfollowed ${post.author.name}` : `Following ${post.author.name}`);
+    setShowMenu(false);
   };
 
   const currentReaction = REACTIONS.find(r => r.key === activeReaction);
@@ -76,7 +115,14 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
   };
 
   return (
-    <article className="card overflow-hidden animate-fade-in hover:shadow-card-hover transition-shadow duration-300">
+    <article className="card overflow-hidden animate-fade-in hover:shadow-card-hover transition-shadow duration-300 relative">
+      {/* Toast */}
+      {toast && (
+        <div className="absolute top-3 left-1/2 -translate-x-1/2 z-50 bg-[#1D2226] dark:bg-white text-white dark:text-[#1D2226] text-xs font-semibold px-4 py-2 rounded-full shadow-lg animate-slide-down whitespace-nowrap">
+          {toast}
+        </div>
+      )}
+
       {/* Header */}
       <div className="flex items-start justify-between px-4 pt-4 pb-3">
         <div className="flex items-start gap-3 flex-1 min-w-0">
@@ -109,33 +155,62 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
 
         <div className="flex items-center gap-1 shrink-0 ml-2">
           {post.author.id !== "u1" && (
-            <button className="btn-secondary text-xs px-3 py-1.5 rounded-full border-[#0A66C2] text-[#0A66C2] hover:bg-[#EAF4FF] dark:hover:bg-[#0A66C2]/10 transition-colors font-bold">
-              + Follow
+            <button
+              onClick={handleFollow}
+              className={`flex items-center gap-1 text-xs font-bold px-3 py-1.5 rounded-full transition-all duration-200 border ${
+                following
+                  ? "border-gray-300 dark:border-gray-600 text-[#666666] dark:text-[#B0B7BE]"
+                  : "border-[#0A66C2] text-[#0A66C2] hover:bg-[#EAF4FF] dark:hover:bg-[#0A66C2]/10"
+              }`}
+            >
+              {following ? <><UserMinus className="w-3.5 h-3.5" />Following</> : <><UserPlus className="w-3.5 h-3.5" />Follow</>}
             </button>
           )}
           <div className="relative">
             <button
-              onClick={() => setShowMenu(!showMenu)}
+              onClick={() => { setShowMenu(!showMenu); setShowShareMenu(false); }}
               className="p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
             >
               <MoreHorizontal className="w-5 h-5 text-[#666666] dark:text-[#B0B7BE]" />
             </button>
             {showMenu && (
-              <div className="absolute top-full right-0 mt-1 w-56 bg-white dark:bg-[#1D2226] rounded-xl shadow-card-hover border border-gray-100 dark:border-gray-700 z-20 animate-slide-down overflow-hidden">
+              <div className="absolute top-full right-0 mt-1 w-60 bg-white dark:bg-[#1D2226] rounded-xl shadow-card-hover border border-gray-100 dark:border-gray-700 z-20 animate-slide-down overflow-hidden">
                 {[
-                  { label: saved ? "Unsave post" : "Save post", icon: saved ? BookmarkCheck : Bookmark, action: () => { setSaved(!saved); setShowMenu(false); } },
-                  { label: "Copy link to post", icon: Send, action: () => { setShowMenu(false); } },
-                  { label: "Share via message", icon: Send, action: () => setShowMenu(false) },
-                  { label: "Not interested in this", icon: X, action: () => setShowMenu(false) },
-                  { label: "Report post", icon: X, action: () => setShowMenu(false) },
+                  {
+                    label: saved ? "Unsave post" : "Save post",
+                    icon: saved ? BookmarkCheck : Bookmark,
+                    action: handleSave,
+                    color: saved ? "text-[#0A66C2]" : undefined
+                  },
+                  {
+                    label: following ? `Unfollow ${post.author.name}` : `Follow ${post.author.name}`,
+                    icon: following ? UserMinus : UserPlus,
+                    action: handleFollow,
+                  },
+                  {
+                    label: "Copy link to post",
+                    icon: Link2,
+                    action: handleCopyLink,
+                  },
+                  {
+                    label: "Not interested in this",
+                    icon: EyeOff,
+                    action: () => { showToast("Post hidden"); setShowMenu(false); }
+                  },
+                  {
+                    label: "Report post",
+                    icon: Flag,
+                    action: () => { showToast("Report submitted"); setShowMenu(false); },
+                    color: "text-red-500"
+                  },
                 ].map((item) => (
                   <button
                     key={item.label}
                     onClick={item.action}
-                    className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 dark:hover:bg-[#38434F] transition-colors text-left text-sm text-[#000000E6] dark:text-white"
+                    className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 dark:hover:bg-[#38434F] transition-colors text-left text-sm"
                   >
-                    <item.icon className="w-4 h-4 text-[#666666] dark:text-[#B0B7BE] shrink-0" />
-                    {item.label}
+                    <item.icon className={`w-4 h-4 shrink-0 ${item.color || "text-[#666666] dark:text-[#B0B7BE]"}`} />
+                    <span className={item.color || "text-[#000000E6] dark:text-white"}>{item.label}</span>
                   </button>
                 ))}
               </div>
@@ -156,6 +231,15 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
           >
             {expanded ? <><ChevronUp className="w-4 h-4" />…see less</> : <><ChevronDown className="w-4 h-4" />…see more</>}
           </button>
+        )}
+        {post.hashtags && post.hashtags.length > 0 && (
+          <div className="flex flex-wrap gap-1.5 mt-2">
+            {post.hashtags.slice(0, 4).map(tag => (
+              <button key={tag} className="text-xs font-semibold text-[#0A66C2] dark:text-[#5B9DD9] hover:underline">
+                #{tag}
+              </button>
+            ))}
+          </div>
         )}
       </div>
 
@@ -180,14 +264,14 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
               <button
                 onClick={() => setCurrentImage(Math.max(0, currentImage - 1))}
                 disabled={currentImage === 0}
-                className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 bg-black/50 hover:bg-black/70 text-white rounded-full flex items-center justify-center disabled:opacity-30 transition-all"
+                className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 bg-black/50 hover:bg-black/70 text-white rounded-full flex items-center justify-center disabled:opacity-30 transition-all text-lg"
               >
                 ‹
               </button>
               <button
                 onClick={() => setCurrentImage(Math.min(post.images!.length - 1, currentImage + 1))}
                 disabled={currentImage === post.images.length - 1}
-                className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 bg-black/50 hover:bg-black/70 text-white rounded-full flex items-center justify-center disabled:opacity-30 transition-all"
+                className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 bg-black/50 hover:bg-black/70 text-white rounded-full flex items-center justify-center disabled:opacity-30 transition-all text-lg"
               >
                 ›
               </button>
@@ -232,6 +316,11 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
           <button className="text-[13px] text-[#666666] dark:text-[#B0B7BE] hover:text-[#0A66C2] hover:underline transition-colors">
             {formatNumber(repostCount)} reposts
           </button>
+          {saved && (
+            <span className="flex items-center gap-0.5 text-[11px] text-[#0A66C2] dark:text-[#5B9DD9] font-semibold">
+              <Bookmark className="w-3 h-3 fill-current" />Saved
+            </span>
+          )}
         </div>
       </div>
 
@@ -284,17 +373,41 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
         </button>
 
         <button
-          onClick={() => { setReposted(!reposted); setRepostCount(reposted ? repostCount - 1 : repostCount + 1); }}
+          onClick={handleRepost}
           className={`reaction-btn ${reposted ? "text-green-600" : ""}`}
         >
           <Repeat2 className={`w-5 h-5 ${reposted ? "text-green-600" : ""}`} />
-          <span>Repost</span>
+          <span className="hidden sm:inline">{reposted ? "Reposted" : "Repost"}</span>
         </button>
 
-        <button className="reaction-btn">
-          <Send className="w-5 h-5" />
-          <span>Send</span>
-        </button>
+        {/* Send / Share */}
+        <div className="relative">
+          <button
+            onClick={() => setShowShareMenu(!showShareMenu)}
+            className="reaction-btn"
+          >
+            <Send className="w-5 h-5" />
+            <span className="hidden sm:inline">Send</span>
+          </button>
+          {showShareMenu && (
+            <div className="absolute bottom-full right-0 mb-2 w-52 bg-white dark:bg-[#1D2226] rounded-xl shadow-card-hover border border-gray-100 dark:border-gray-700 overflow-hidden animate-slide-down z-30">
+              {[
+                { icon: <Send className="w-4 h-4" />, label: "Send in a message", action: () => { showToast("Shared in message"); setShowShareMenu(false); } },
+                { icon: <Share2 className="w-4 h-4" />, label: "Share to feed", action: () => { showToast("Shared to your feed"); setShowShareMenu(false); } },
+                { icon: copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />, label: copied ? "Link copied!" : "Copy link", action: handleCopyLink },
+              ].map(item => (
+                <button
+                  key={item.label}
+                  onClick={item.action}
+                  className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 dark:hover:bg-[#38434F] transition-colors text-left text-sm text-[#000000E6] dark:text-white"
+                >
+                  <span className="text-[#666666] dark:text-[#B0B7BE]">{item.icon}</span>
+                  {item.label}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Comments */}

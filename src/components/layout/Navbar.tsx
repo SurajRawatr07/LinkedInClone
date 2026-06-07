@@ -3,10 +3,11 @@ import { useNavigate, useLocation } from "react-router-dom";
 import {
   Home, Users, Briefcase, MessageSquare, Bell, Grid3X3,
   Search, Sun, Moon, ChevronDown, LogOut, Settings,
-  User, Linkedin, X, TrendingUp
+  User, Linkedin, X, TrendingUp, BarChart2, Hash,
+  Globe, Clock, UserPlus
 } from "lucide-react";
 import { currentUser } from "@/constants/mockData";
-import { formatConnectionCount } from "@/lib/utils";
+import { formatConnectionCount, formatNumber } from "@/lib/utils";
 
 interface NavbarProps {
   isDark: boolean;
@@ -17,11 +18,26 @@ interface NavbarProps {
 }
 
 const searchSuggestions = [
-  { id: "1", text: "Software Engineer at Google", type: "job" },
-  { id: "2", text: "Sarah Williams — UX Designer", type: "person" },
-  { id: "3", text: "React Developer jobs", type: "job" },
-  { id: "4", text: "Distributed Systems", type: "skill" },
-  { id: "5", text: "Stripe — Company", type: "company" },
+  { id: "1", text: "Software Engineer at Google", type: "job", icon: <Briefcase className="w-3.5 h-3.5" /> },
+  { id: "2", text: "Sarah Williams — UX Designer", type: "person", icon: <User className="w-3.5 h-3.5" /> },
+  { id: "3", text: "React Developer jobs", type: "job", icon: <Briefcase className="w-3.5 h-3.5" /> },
+  { id: "4", text: "Distributed Systems", type: "skill", icon: <Hash className="w-3.5 h-3.5" /> },
+  { id: "5", text: "Stripe — Company", type: "company", icon: <Globe className="w-3.5 h-3.5" /> },
+  { id: "6", text: "Marcus Johnson — Product Manager", type: "person", icon: <User className="w-3.5 h-3.5" /> },
+  { id: "7", text: "Frontend Developer jobs", type: "job", icon: <Briefcase className="w-3.5 h-3.5" /> },
+];
+
+const trendingSearches = [
+  { text: "#ReactJS", count: "24K searches" },
+  { text: "#OpenToWork", count: "18K searches" },
+  { text: "TypeScript interview", count: "12K searches" },
+  { text: "Software Engineer salary", count: "9K searches" },
+];
+
+const recentSearches = [
+  "Suraj Rawat LinkedIn",
+  "Frontend Developer India",
+  "React TypeScript jobs",
 ];
 
 const Navbar: React.FC<NavbarProps> = ({ isDark, toggleDark, onLogout, notificationCount = 3, messageCount = 3 }) => {
@@ -31,8 +47,10 @@ const Navbar: React.FC<NavbarProps> = ({ isDark, toggleDark, onLogout, notificat
   const [showSearch, setShowSearch] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const [showMobileSearch, setShowMobileSearch] = useState(false);
+  const [showMoreMenu, setShowMoreMenu] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLDivElement>(null);
+  const moreRef = useRef<HTMLDivElement>(null);
 
   const navItems = [
     { icon: Home, label: "Home", path: "/" },
@@ -42,10 +60,17 @@ const Navbar: React.FC<NavbarProps> = ({ isDark, toggleDark, onLogout, notificat
     { icon: Bell, label: "Notifications", path: "/notifications", badge: notificationCount },
   ];
 
+  const moreItems = [
+    { icon: BarChart2, label: "Analytics", path: "/analytics" },
+    { icon: Users, label: "Community", path: "/community" },
+    { icon: Settings, label: "Settings", path: "/settings" },
+  ];
+
   useEffect(() => {
     const handler = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) setShowDropdown(false);
       if (searchRef.current && !searchRef.current.contains(e.target as Node)) setShowSearch(false);
+      if (moreRef.current && !moreRef.current.contains(e.target as Node)) setShowMoreMenu(false);
     };
     document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
@@ -56,6 +81,10 @@ const Navbar: React.FC<NavbarProps> = ({ isDark, toggleDark, onLogout, notificat
     if (path !== "/" && location.pathname.startsWith(path)) return true;
     return false;
   };
+
+  const filtered = searchQuery
+    ? searchSuggestions.filter(s => s.text.toLowerCase().includes(searchQuery.toLowerCase()))
+    : [];
 
   return (
     <>
@@ -76,8 +105,8 @@ const Navbar: React.FC<NavbarProps> = ({ isDark, toggleDark, onLogout, notificat
                 type="text"
                 placeholder="Search"
                 value={searchQuery}
-                onChange={(e) => { setSearchQuery(e.target.value); setShowSearch(e.target.value.length > 0); }}
-                onFocus={() => setShowSearch(searchQuery.length > 0 || true)}
+                onChange={(e) => { setSearchQuery(e.target.value); setShowSearch(true); }}
+                onFocus={() => setShowSearch(true)}
                 className="bg-transparent text-sm text-[#000000E6] dark:text-white placeholder-[#666666] dark:placeholder-[#B0B7BE] outline-none w-full"
               />
               {searchQuery && (
@@ -87,25 +116,64 @@ const Navbar: React.FC<NavbarProps> = ({ isDark, toggleDark, onLogout, notificat
               )}
             </div>
 
-            {/* Suggestions Dropdown */}
+            {/* Enhanced Search Dropdown */}
             {showSearch && (
               <div className="absolute top-full left-0 right-0 mt-1 bg-white dark:bg-[#1D2226] rounded-xl shadow-card-hover border border-gray-100 dark:border-gray-700 overflow-hidden animate-slide-down z-50">
-                {searchSuggestions
-                  .filter(s => !searchQuery || s.text.toLowerCase().includes(searchQuery.toLowerCase()))
-                  .map((s) => (
-                    <button
-                      key={s.id}
-                      className="w-full flex items-center gap-3 px-4 py-2.5 hover:bg-gray-50 dark:hover:bg-[#38434F] transition-colors text-left"
-                      onClick={() => { setSearchQuery(s.text); setShowSearch(false); }}
-                    >
-                      <Search className="w-4 h-4 text-[#666666] dark:text-[#B0B7BE] shrink-0" />
-                      <span className="text-sm text-[#000000E6] dark:text-white truncate">{s.text}</span>
-                      <span className="ml-auto text-xs text-[#666666] dark:text-[#B0B7BE] capitalize shrink-0">{s.type}</span>
-                    </button>
-                  ))}
-                <div className="border-t border-gray-100 dark:border-gray-700 px-4 py-2">
-                  <p className="text-xs text-[#666666] dark:text-[#B0B7BE]">Try searching for people, jobs, or posts</p>
-                </div>
+                {searchQuery ? (
+                  <>
+                    {filtered.length > 0 ? filtered.map((s) => (
+                      <button
+                        key={s.id}
+                        className="w-full flex items-center gap-3 px-4 py-2.5 hover:bg-gray-50 dark:hover:bg-[#38434F] transition-colors text-left"
+                        onClick={() => { setSearchQuery(s.text); setShowSearch(false); }}
+                      >
+                        <span className="text-[#666666] dark:text-[#B0B7BE]">{s.icon}</span>
+                        <span className="text-sm text-[#000000E6] dark:text-white truncate flex-1">{s.text}</span>
+                        <span className="ml-auto text-xs text-[#666666] dark:text-[#B0B7BE] capitalize shrink-0">{s.type}</span>
+                      </button>
+                    )) : (
+                      <div className="px-4 py-3 text-sm text-[#666666] dark:text-[#B0B7BE]">No results for "{searchQuery}"</div>
+                    )}
+                  </>
+                ) : (
+                  <>
+                    {/* Recent Searches */}
+                    <div className="px-4 pt-3 pb-1">
+                      <p className="text-xs font-bold text-[#666666] dark:text-[#B0B7BE] uppercase tracking-wide mb-2">Recent</p>
+                      {recentSearches.map((s, i) => (
+                        <button
+                          key={i}
+                          className="w-full flex items-center gap-3 py-2 hover:bg-gray-50 dark:hover:bg-[#38434F] rounded-lg px-2 transition-colors text-left -mx-2"
+                          onClick={() => { setSearchQuery(s); setShowSearch(false); }}
+                        >
+                          <Clock className="w-3.5 h-3.5 text-[#666666] dark:text-[#B0B7BE]" />
+                          <span className="text-sm text-[#000000E6] dark:text-white">{s}</span>
+                        </button>
+                      ))}
+                    </div>
+
+                    <div className="border-t border-gray-100 dark:border-gray-700 px-4 pt-3 pb-1">
+                      <p className="text-xs font-bold text-[#666666] dark:text-[#B0B7BE] uppercase tracking-wide mb-2">Trending</p>
+                      {trendingSearches.map((s, i) => (
+                        <button
+                          key={i}
+                          className="w-full flex items-center gap-3 py-2 hover:bg-gray-50 dark:hover:bg-[#38434F] rounded-lg px-2 transition-colors text-left -mx-2"
+                          onClick={() => { setSearchQuery(s.text); setShowSearch(false); }}
+                        >
+                          <TrendingUp className="w-3.5 h-3.5 text-[#0A66C2]" />
+                          <div className="flex-1 min-w-0">
+                            <span className="text-sm text-[#000000E6] dark:text-white">{s.text}</span>
+                            <span className="text-xs text-[#666666] dark:text-[#B0B7BE] ml-2">{s.count}</span>
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+
+                    <div className="border-t border-gray-100 dark:border-gray-700 px-4 py-2">
+                      <p className="text-xs text-[#666666] dark:text-[#B0B7BE]">Try searching for people, jobs, or posts</p>
+                    </div>
+                  </>
+                )}
               </div>
             )}
           </div>
@@ -131,7 +199,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDark, toggleDark, onLogout, notificat
               >
                 <div className="relative">
                   <item.icon className="w-6 h-6" />
-                  {item.badge && item.badge > 0 && (
+                  {item.badge !== undefined && item.badge > 0 && (
                     <span className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-red-500 text-white text-[9px] font-bold rounded-full flex items-center justify-center">
                       {item.badge > 9 ? "9+" : item.badge}
                     </span>
@@ -141,13 +209,32 @@ const Navbar: React.FC<NavbarProps> = ({ isDark, toggleDark, onLogout, notificat
               </button>
             ))}
 
-            {/* Work / More */}
-            <button className="nav-item">
-              <Grid3X3 className="w-6 h-6" />
-              <span className="text-[11px] font-medium flex items-center gap-0.5">
-                More <ChevronDown className="w-3 h-3" />
-              </span>
-            </button>
+            {/* More Dropdown */}
+            <div ref={moreRef} className="relative">
+              <button
+                onClick={() => setShowMoreMenu(!showMoreMenu)}
+                className={`nav-item ${moreItems.some(m => isActive(m.path)) ? "active" : ""}`}
+              >
+                <Grid3X3 className="w-6 h-6" />
+                <span className="text-[11px] font-medium flex items-center gap-0.5">
+                  More <ChevronDown className="w-3 h-3" />
+                </span>
+              </button>
+              {showMoreMenu && (
+                <div className="absolute top-full right-0 mt-1 w-52 bg-white dark:bg-[#1D2226] rounded-xl shadow-card-hover border border-gray-100 dark:border-gray-700 overflow-hidden animate-slide-down z-50">
+                  {moreItems.map(item => (
+                    <button
+                      key={item.path}
+                      onClick={() => { navigate(item.path); setShowMoreMenu(false); }}
+                      className={`w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 dark:hover:bg-[#38434F] transition-colors text-left ${isActive(item.path) ? "text-[#0A66C2]" : "text-[#000000E6] dark:text-white"}`}
+                    >
+                      <item.icon className="w-5 h-5 text-[#666666] dark:text-[#B0B7BE]" />
+                      <span className="text-sm">{item.label}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Divider */}
@@ -216,8 +303,12 @@ const Navbar: React.FC<NavbarProps> = ({ isDark, toggleDark, onLogout, notificat
                       <p className="text-xs text-[#666666] dark:text-[#B0B7BE]">Connections</p>
                     </div>
                     <div className="text-center">
-                      <p className="text-sm font-bold text-[#000000E6] dark:text-white">{currentUser.profileViews}</p>
+                      <p className="text-sm font-bold text-[#000000E6] dark:text-white">{formatNumber(currentUser.profileViews)}</p>
                       <p className="text-xs text-[#666666] dark:text-[#B0B7BE]">Profile views</p>
+                    </div>
+                    <div className="text-center">
+                      <p className="text-sm font-bold text-[#000000E6] dark:text-white">{formatNumber(currentUser.followerCount)}</p>
+                      <p className="text-xs text-[#666666] dark:text-[#B0B7BE]">Followers</p>
                     </div>
                   </div>
 
@@ -225,7 +316,9 @@ const Navbar: React.FC<NavbarProps> = ({ isDark, toggleDark, onLogout, notificat
                   <div className="p-2">
                     {[
                       { icon: User, label: "View Profile", action: () => { navigate("/profile"); setShowDropdown(false); } },
-                      { icon: Settings, label: "Settings & Privacy", action: () => setShowDropdown(false) },
+                      { icon: BarChart2, label: "Analytics Dashboard", action: () => { navigate("/analytics"); setShowDropdown(false); } },
+                      { icon: Users, label: "Community", action: () => { navigate("/community"); setShowDropdown(false); } },
+                      { icon: Settings, label: "Settings & Privacy", action: () => { navigate("/settings"); setShowDropdown(false); } },
                       { icon: TrendingUp, label: "Premium Features", action: () => setShowDropdown(false) },
                     ].map((item) => (
                       <button
@@ -282,7 +375,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDark, toggleDark, onLogout, notificat
           >
             <div className="relative">
               <item.icon className="w-6 h-6" />
-              {item.badge && item.badge > 0 && (
+              {item.badge !== undefined && item.badge > 0 && (
                 <span className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-red-500 text-white text-[9px] font-bold rounded-full flex items-center justify-center">
                   {item.badge > 9 ? "9+" : item.badge}
                 </span>

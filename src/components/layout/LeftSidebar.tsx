@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Bookmark, Users, Star, ChevronRight, TrendingUp, Plus,
-  Hash, Code2, Zap, Award
+  Hash, Code2, Zap, Award, BarChart2, Globe
 } from "lucide-react";
 import { currentUser } from "@/constants/mockData";
 import { formatNumber, formatConnectionCount } from "@/lib/utils";
@@ -99,6 +99,8 @@ const LeftSidebar: React.FC = () => {
         {[
           { icon: Bookmark, label: "Saved items", count: 8 },
           { icon: Users, label: "My Network", count: null, path: "/network" },
+          { icon: BarChart2, label: "Analytics", count: null, path: "/analytics" },
+          { icon: Globe, label: "Community", count: null, path: "/community" },
           { icon: Star, label: "Following & Hashtags", count: null },
           { icon: Award, label: "Certifications", count: 4 },
         ].map((item) => (

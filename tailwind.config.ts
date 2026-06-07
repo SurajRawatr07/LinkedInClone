@@ -37,6 +37,9 @@ export default {
       borderRadius: {
         card: "12px",
       },
+      borderWidth: {
+        "3": "3px",
+      },
       boxShadow: {
         card: "0 0 0 1px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.05)",
         "card-hover": "0 0 0 1px rgba(0,0,0,0.10), 0 4px 12px rgba(0,0,0,0.10)",
