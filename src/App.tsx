@@ -22,7 +22,7 @@ type AuthScreen = "login" | "signup" | "forgot" | "otp" | "reset";
 const SESSION_KEY = "linkedin_session";
 
 const App: React.FC = () => {
-  const [isDark, toggle] = useDarkMode();
+  const { isDark, toggle } = useDarkMode();
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
     try {
       return localStorage.getItem(SESSION_KEY) === "true";

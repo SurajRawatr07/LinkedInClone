@@ -541,7 +541,7 @@ export const mockNotifications: Notification[] = [
   {
     id: "n9",
     type: "connection",
-    actor: mockUsers[5] || mockUsers[1],
+    actor: mockUsers[4],  
     content: "James Liu wants to connect with you",
     timestamp: "1 day ago",
     isRead: true,

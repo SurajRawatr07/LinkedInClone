@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import Navbar from "@/components/layout/Navbar";
 import {
   User, Lock, Bell, Eye, Moon, Globe, Smartphone, Shield,
-  ChevronRight, Check, Toggle, Trash2, LogOut, Download,
-  Mail, Key, Link2, CreditCard, Languages, Sun, Monitor
+  ChevronRight, Check, Trash2, LogOut, Download,
+  Mail, Key, Link2, Languages, Sun, Monitor
 } from "lucide-react";
 
 interface SettingsPageProps {
